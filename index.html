@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Jaami Hasan — Technical Program Manager, iOS Developer, and founder of Ascendance. Building Phantom Grid for iOS.">
+<meta property="og:title" content="Jaami Hasan — Builder">
+<meta property="og:description" content="18 years building systems that don't fail. Now building iOS. Technical PM · iOS Developer · Founder @Ascendance.">
+<meta property="og:url" content="https://jaamihasan.com">
+<meta name="twitter:card" content="summary_large_image">
+<title>Jaami Hasan — Builder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#020617; --bg2:#0f172a; --bg3:#1e293b;
+  --teal:#2dd4bf; --teal-dim:#0d9488; --teal-faint:rgba(45,212,191,0.08);
+  --gold:#fde68a; --gold-faint:rgba(253,230,138,0.10);
+  --white:#f8fafc; --muted:#64748b; --muted2:#94a3b8;
+  --border:#1e293b; --border2:#334155;
+  --purple:#a78bfa; --red:#f87171;
+  --mono:'Space Mono',monospace;
+  --body:'Inter',sans-serif;
+}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:var(--body);font-size:16px;line-height:1.6;overflow-x:hidden;}
+
+/* ── Utility ── */
+.container{max-width:1040px;margin:0 auto;padding:0 28px;}
+.teal{color:var(--teal);} .gold{color:var(--gold);} .muted{color:var(--muted);}
+.mono{font-family:var(--mono);}
+.tag{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:700;padding:3px 9px;border-radius:3px;letter-spacing:.04em;}
+.tag-teal{background:rgba(45,212,191,.1);color:var(--teal);border:1px solid rgba(45,212,191,.22);}
+.tag-gold{background:var(--gold-faint);color:var(--gold);border:1px solid rgba(253,230,138,.22);}
+.tag-purple{background:rgba(167,139,250,.1);color:var(--purple);border:1px solid rgba(167,139,250,.22);}
+.tag-muted{background:rgba(100,116,139,.1);color:var(--muted2);border:1px solid rgba(100,116,139,.2);}
+section{padding:96px 0;}
+.eyebrow{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--teal);letter-spacing:.22em;text-transform:uppercase;margin-bottom:14px;}
+.sec-title{font-family:var(--mono);font-size:clamp(22px,3.5vw,36px);font-weight:700;color:var(--white);margin-bottom:16px;line-height:1.15;}
+.sec-desc{font-size:16px;color:var(--muted);max-width:560px;line-height:1.8;font-weight:300;}
+.divider{border:none;border-top:1px solid var(--border);margin:0;}
+
+/* ── Nav ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(2,6,23,.9);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
+.nav-inner{max-width:1040px;margin:0 auto;padding:0 28px;height:58px;display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--teal);letter-spacing:3px;text-decoration:none;}
+.nav-links{display:flex;gap:32px;list-style:none;}
+.nav-links a{font-size:11px;font-family:var(--mono);color:var(--muted);text-decoration:none;letter-spacing:.08em;transition:color .2s;}
+.nav-links a:hover{color:var(--teal);}
+.nav-cta{font-family:var(--mono);font-size:10px;font-weight:700;padding:8px 16px;border-radius:3px;background:var(--teal);color:var(--bg);text-decoration:none;letter-spacing:.06em;transition:opacity .2s;}
+.nav-cta:hover{opacity:.85;}
+
+/* ── Hero ── */
+#hero{min-height:100vh;display:flex;align-items:center;padding:130px 0 80px;position:relative;overflow:hidden;}
+.hero-grid-bg{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:44px 44px;opacity:.2;will-change:transform;}
+.hero-glow{position:absolute;top:30%;left:40%;transform:translate(-50%,-50%);width:700px;height:700px;background:radial-gradient(circle,rgba(45,212,191,.07) 0%,transparent 65%);pointer-events:none;}
+.hero-glow2{position:absolute;bottom:10%;right:5%;width:400px;height:400px;background:radial-gradient(circle,rgba(167,139,250,.05) 0%,transparent 65%);pointer-events:none;}
+.hero-content{position:relative;z-index:1;max-width:700px;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;color:var(--teal);border:1px solid rgba(45,212,191,.3);padding:5px 14px;border-radius:20px;margin-bottom:28px;letter-spacing:.08em;}
+.hero-badge-dot{width:7px;height:7px;border-radius:50%;background:var(--teal);animation:pulse 2s ease-in-out infinite;}
+.hero-name{font-family:var(--mono);font-size:clamp(38px,7vw,80px);font-weight:700;line-height:1.0;color:var(--white);margin-bottom:10px;letter-spacing:-1px;}
+.hero-role{font-family:var(--mono);font-size:clamp(13px,2vw,18px);color:var(--teal);margin-bottom:32px;letter-spacing:.04em;}
+.hero-bio{font-size:18px;line-height:1.8;color:var(--muted);margin-bottom:44px;font-weight:300;}
+.hero-bio strong{color:var(--white);font-weight:500;}
+.cta-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:64px;}
+.btn{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.08em;padding:13px 26px;border-radius:4px;text-decoration:none;transition:all .2s;cursor:pointer;border:none;display:inline-block;}
+.btn-primary{background:var(--teal);color:var(--bg);}
+.btn-primary:hover{background:#5eead4;transform:translateY(-2px);}
+.btn-outline{background:transparent;color:var(--teal);border:1.5px solid rgba(45,212,191,.5);}
+.btn-outline:hover{background:rgba(45,212,191,.08);border-color:var(--teal);}
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.stat-cell{background:var(--bg2);padding:22px 20px;}
+.stat-num{font-family:var(--mono);font-size:26px;font-weight:700;color:var(--teal);line-height:1;}
+.stat-label{font-size:11px;color:var(--muted);letter-spacing:.04em;margin-top:6px;line-height:1.4;}
+
+/* ── Game section ── */
+#game{background:var(--bg);}
+.game-layout{display:grid;grid-template-columns:1.1fr .9fr;gap:52px;align-items:start;margin-top:60px;}
+.game-window{background:var(--bg2);border:1px solid var(--teal);border-radius:10px;overflow:hidden;box-shadow:0 0 40px rgba(45,212,191,.08);}
+.game-titlebar{background:var(--bg);padding:11px 16px;display:flex;align-items:center;gap:7px;border-bottom:1px solid var(--border);}
+.dot{width:11px;height:11px;border-radius:50%;}
+.game-titlebar-label{font-family:var(--mono);font-size:10px;color:var(--muted);margin-left:6px;letter-spacing:.06em;}
+.game-embed{position:relative;height:480px;}
+.game-embed iframe{width:100%;height:100%;border:none;display:block;}
+.game-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;background:rgba(2,6,23,.75);cursor:pointer;transition:opacity .2s;}
+.game-overlay:hover{opacity:.92;}
+.play-circle{width:64px;height:64px;background:var(--teal);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--bg);font-weight:700;animation:float 3s ease-in-out infinite;}
+.game-overlay p{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.1em;}
+.game-controls-hint{font-family:var(--mono);font-size:10px;color:var(--muted);text-align:center;padding:10px;border-top:1px solid var(--border);background:var(--bg);letter-spacing:.06em;}
+.game-info{display:flex;flex-direction:column;gap:28px;padding-top:8px;}
+.game-name{font-family:var(--mono);font-size:32px;font-weight:700;color:var(--white);letter-spacing:3px;line-height:1;}
+.game-tagline{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:6px;letter-spacing:.04em;}
+.features{display:flex;flex-direction:column;gap:14px;}
+.feature{display:flex;gap:14px;}
+.feature-bullet{color:var(--teal);font-family:var(--mono);font-size:12px;padding-top:1px;flex-shrink:0;}
+.feature-body{font-size:14px;color:var(--muted);line-height:1.65;}
+.feature-body strong{color:var(--white);font-weight:500;}
+.themes-row{display:flex;gap:10px;}
+.theme-chip{font-family:var(--mono);font-size:10px;font-weight:700;padding:5px 14px;border-radius:20px;letter-spacing:.06em;}
+.chip-phantom{background:rgba(45,212,191,.12);color:var(--teal);border:1px solid rgba(45,212,191,.3);}
+.chip-sunken{background:rgba(253,230,138,.1);color:var(--gold);border:1px solid rgba(253,230,138,.3);}
+.appstore-strip{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;}
+.as-text{font-size:11px;color:var(--muted);}
+.as-title{font-size:14px;font-weight:600;color:var(--white);margin-top:2px;}
+.as-pill{font-family:var(--mono);font-size:10px;font-weight:700;padding:5px 12px;border-radius:3px;background:var(--bg3);color:var(--muted);border:1px solid var(--border);letter-spacing:.06em;}
+.tag-row{display:flex;gap:7px;flex-wrap:wrap;}
+
+/* ── Tech cards ── */
+#tech{background:var(--bg2);}
+.tech-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-top:52px;}
+.tc{background:var(--bg2);padding:30px;transition:background .2s;}
+.tc:hover{background:var(--bg3);}
+.tc-icon{font-size:22px;margin-bottom:18px;}
+.tc-title{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--white);margin-bottom:10px;letter-spacing:.02em;}
+.tc-desc{font-size:13px;color:var(--muted);line-height:1.7;}
+.tc-code{font-family:var(--mono);font-size:10px;color:var(--teal-dim);background:rgba(45,212,191,.05);padding:9px 12px;border-radius:3px;margin-top:14px;border-left:2px solid var(--teal-dim);line-height:1.7;}
+
+/* ── QA ── */
+#qa{background:var(--bg);}
+.qa-stack{display:flex;flex-direction:column;margin-top:52px;border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+.qa-item{padding:32px 36px;border-bottom:1px solid var(--border);transition:background .15s;}
+.qa-item:last-child{border-bottom:none;}
+.qa-item:hover{background:var(--bg2);}
+.qa-q{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--teal);margin-bottom:14px;letter-spacing:.02em;}
+.qa-a{font-size:14px;color:var(--muted);line-height:1.85;max-width:700px;}
+.qa-a strong{color:var(--white);font-weight:500;}
+
+/* ── Projects ── */
+#projects{background:var(--bg2);}
+.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:52px;}
+.proj-card{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:24px;transition:border-color .2s,transform .2s;}
+.proj-card:hover{border-color:var(--border2);transform:translateY(-2px);}
+.proj-card.hero-card{border-color:var(--teal);background:rgba(45,212,191,.02);}
+.proj-card.hero-card:hover{border-color:#5eead4;}
+.proj-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;}
+.proj-name{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--white);}
+.proj-status{font-family:var(--mono);font-size:9px;font-weight:700;padding:3px 8px;border-radius:20px;}
+.s-active{background:rgba(45,212,191,.12);color:var(--teal);}
+.s-done{background:rgba(100,116,139,.12);color:var(--muted);}
+.s-build{background:rgba(253,230,138,.1);color:var(--gold);}
+.proj-desc{font-size:13px;color:var(--muted);line-height:1.65;margin-bottom:16px;}
+
+/* ── Background ── */
+#background{background:var(--bg);}
+.bg-cols{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:52px;}
+.cred-stack{display:flex;flex-direction:column;gap:10px;}
+.cred{display:flex;gap:16px;align-items:flex-start;padding:16px 18px;background:var(--bg2);border-radius:6px;border:1px solid var(--border);transition:border-color .2s;}
+.cred:hover{border-color:var(--border2);}
+.cred-yr{font-family:var(--mono);font-size:10px;color:var(--teal-dim);min-width:44px;padding-top:3px;}
+.cred-title{font-size:14px;font-weight:500;color:var(--white);margin-bottom:3px;}
+.cred-org{font-size:12px;color:var(--muted);}
+.side-stack{display:flex;flex-direction:column;gap:16px;}
+.box{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:26px;}
+.box-title{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--teal);letter-spacing:.12em;margin-bottom:18px;}
+.target-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;}
+.target-row:last-child{border-bottom:none;}
+.target-role{color:var(--white);}
+.target-fit{font-family:var(--mono);font-weight:700;color:var(--teal);}
+
+/* ── Contact ── */
+#contact{background:var(--bg2);text-align:center;}
+.contact-title{font-family:var(--mono);font-size:clamp(24px,4vw,40px);font-weight:700;color:var(--white);margin-bottom:16px;letter-spacing:-0.5px;}
+.contact-sub{font-size:16px;color:var(--muted);margin-bottom:44px;font-weight:300;}
+.contact-links{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+.cl{font-family:var(--mono);font-size:12px;font-weight:700;padding:13px 26px;border-radius:4px;text-decoration:none;letter-spacing:.08em;transition:all .2s;}
+.cl-linkedin{background:rgba(45,212,191,.1);color:var(--teal);border:1.5px solid rgba(45,212,191,.4);}
+.cl-linkedin:hover{background:var(--teal);color:var(--bg);}
+.cl-email{background:transparent;color:var(--muted2);border:1.5px solid var(--border);}
+.cl-email:hover{border-color:var(--muted2);color:var(--white);}
+
+/* ── Footer ── */
+footer{padding:30px 0;border-top:1px solid var(--border);text-align:center;}
+.foot{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.08em;}
+.foot span{color:var(--teal);}
+
+/* ── Animations ── */
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+
+/* ── Responsive ── */
+@media(max-width:900px){
+  .tech-grid{grid-template-columns:repeat(2,1fr);}
+  .proj-grid{grid-template-columns:repeat(2,1fr);}
+  .game-layout{grid-template-columns:1fr;}
+  .bg-cols{grid-template-columns:1fr;}
+}
+@media(max-width:640px){
+  .hero-stats{grid-template-columns:repeat(2,1fr);}
+  .tech-grid{grid-template-columns:1fr;}
+  .proj-grid{grid-template-columns:1fr;}
+  .nav-links{display:none;}
+  section{padding:64px 0;}
+  .qa-item{padding:24px 20px;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo">JAAMI HASAN</a>
+    <ul class="nav-links" role="list">
+      <li><a href="#game">PHANTOM GRID</a></li>
+      <li><a href="#tech">ARCHITECTURE</a></li>
+      <li><a href="#projects">PROJECTS</a></li>
+      <li><a href="#background">BACKGROUND</a></li>
+    </ul>
+    <a href="mailto:JaamiHasan89@gmail.com" class="nav-cta">GET IN TOUCH</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero" aria-label="Introduction">
+  <div class="hero-grid-bg" aria-hidden="true"></div>
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="hero-glow2" aria-hidden="true"></div>
+  <div class="container hero-content">
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      OPEN TO TPM · iOS · PROGRAM MANAGER ROLES
+    </div>
+    <div class="hero-name">Jaami<br>Hasan</div>
+    <div class="hero-role">Technical PM &nbsp;·&nbsp; iOS Developer &nbsp;·&nbsp; Founder @Ascendance</div>
+    <p class="hero-bio">
+      <strong>18 years building systems that don't fail</strong> — from HACCP food safety
+      programs to AI-powered trading platforms to a native iOS arcade game. SSBB · MBA ·
+      Google PM Cert · PMP candidate. Bryan-College Station, TX.
+    </p>
+    <div class="cta-row">
+      <a href="#game" class="btn btn-primary">See Phantom Grid ↓</a>
+      <a href="https://www.linkedin.com/in/jaamihasan/" target="_blank" rel="noopener" class="btn btn-outline">LinkedIn ↗</a>
+    </div>
+    <div class="hero-stats" role="list" aria-label="Key stats">
+      <div class="stat-cell" role="listitem">
+        <div class="stat-num">18</div>
+        <div class="stat-label">YEARS IN OPS<br>LEADERSHIP</div>
+      </div>
+      <div class="stat-cell" role="listitem">
+        <div class="stat-num">15</div>
+        <div class="stat-label">BFS-VERIFIED<br>GAME LEVELS</div>
+      </div>
+      <div class="stat-cell" role="listitem">
+        <div class="stat-num" style="font-size:18px;padding-top:4px;">Swift</div>
+        <div class="stat-label">NATIVE iOS<br>SPRITEKIT</div>
+      </div>
+      <div class="stat-cell" role="listitem">
+        <div class="stat-num teal" style="font-size:22px;animation:pulse 2s ease-in-out infinite;">●</div>
+        <div class="stat-label">BUILDING<br>NOW</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- GAME -->
+<section id="game" aria-label="Phantom Grid game showcase">
+  <div class="container">
+    <div class="eyebrow">Current Project</div>
+    <div class="sec-title">Phantom Grid</div>
+    <p class="sec-desc">A grid-based arcade game inspired by Lode Runner (1983), rebuilt from scratch with modern architecture. Play it right here — coming to the iOS App Store in 2026.</p>
+
+    <div class="game-layout">
+      <!-- GAME EMBED -->
+      <div>
+        <div class="game-window">
+          <div class="game-titlebar" aria-hidden="true">
+            <div class="dot" style="background:#ff5f57"></div>
+            <div class="dot" style="background:#febc2e"></div>
+            <div class="dot" style="background:#28c840"></div>
+            <span class="game-titlebar-label">PHANTOM GRID — WEB PROTOTYPE</span>
+          </div>
+          <div class="game-embed">
+            <iframe id="game-iframe" src="about:blank" title="Phantom Grid — playable game prototype" allow="autoplay"></iframe>
+            <div class="game-overlay" id="game-overlay" onclick="loadGame()" role="button" tabindex="0" aria-label="Click to play Phantom Grid" onkeypress="if(event.key==='Enter')loadGame()">
+              <div class="play-circle" aria-hidden="true">▶</div>
+              <p>CLICK TO PLAY</p>
+            </div>
+          </div>
+          <div class="game-controls-hint" aria-label="Game controls">
+            ARROWS — move &nbsp;·&nbsp; Z/X — dig &nbsp;·&nbsp; P — pause &nbsp;·&nbsp; dig the floor too
+          </div>
+        </div>
+      </div>
+
+      <!-- GAME INFO -->
+      <div class="game-info">
+        <div>
+          <div class="game-name">PHANTOM GRID</div>
+          <div class="game-tagline">iOS arcade &nbsp;·&nbsp; Swift + SpriteKit &nbsp;·&nbsp; 2026</div>
+        </div>
+
+        <div class="features">
+          <div class="feature">
+            <div class="feature-bullet">▸</div>
+            <div class="feature-body"><strong>15 hand-designed levels</strong> — each one BFS-verified so every gold orb is guaranteed reachable from spawn. No unwinnable states ship.</div>
+          </div>
+          <div class="feature">
+            <div class="feature-bullet">▸</div>
+            <div class="feature-body"><strong>Fixed-timestep loop</strong> — identical gameplay speed on any device, from 60Hz phones to 120Hz ProMotion displays.</div>
+          </div>
+          <div class="feature">
+            <div class="feature-bullet">▸</div>
+            <div class="feature-body"><strong>Independent enemy AI</strong> — each guard runs its own chase/patrol state machine with unique timing offsets so they never mirror each other.</div>
+          </div>
+          <div class="feature">
+            <div class="feature-bullet">▸</div>
+            <div class="feature-body"><strong>Dual visual themes</strong> — Phantom Grid (midnight teal) and Sunken Market (warm parchment). Toggle live, no restart needed.</div>
+          </div>
+          <div class="feature">
+            <div class="feature-bullet">▸</div>
+            <div class="feature-body"><strong>Teleport exit sequence</strong> — collect all orbs and your character power-surges out of the level with a Super Saiyan flash.</div>
+          </div>
+        </div>
+
+        <div>
+          <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.1em;margin-bottom:10px;">THEMES</div>
+          <div class="themes-row">
+            <div class="theme-chip chip-phantom">◉ PHANTOM GRID</div>
+            <div class="theme-chip chip-sunken">◎ SUNKEN MARKET</div>
+          </div>
+        </div>
+
+        <div class="appstore-strip">
+          <div>
+            <div class="as-text">COMING TO</div>
+            <div class="as-title">App Store — iOS 2026</div>
+          </div>
+          <div class="as-pill">IN DEVELOPMENT</div>
+        </div>
+
+        <div class="tag-row">
+          <span class="tag tag-teal">Swift</span>
+          <span class="tag tag-teal">SpriteKit</span>
+          <span class="tag tag-teal">Xcode 26.3</span>
+          <span class="tag tag-muted">JavaScript</span>
+          <span class="tag tag-muted">Python · BFS</span>
+          <span class="tag tag-purple">Claude Code</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ARCHITECTURE -->
+<section id="tech" aria-label="Technical architecture">
+  <div class="container">
+    <div class="eyebrow">Under the Hood</div>
+    <div class="sec-title">Architecture decisions that matter</div>
+    <p class="sec-desc">Every choice in this project maps to a real engineering tradeoff — and a real interview answer.</p>
+
+    <div class="tech-grid" role="list">
+      <div class="tc" role="listitem">
+        <div class="tc-icon">⏱</div>
+        <div class="tc-title">Fixed Timestep Loop</div>
+        <div class="tc-desc">Game logic runs at exactly 60 ticks/second regardless of display Hz. Discovered when the web prototype ran 2× faster on a 120Hz MacBook than a 60Hz phone — then fixed before any code was ported to Swift.</div>
+        <div class="tc-code">accumulator += delta<br>while acc >= 16.67ms {<br>&nbsp;&nbsp;tick()<br>}</div>
+      </div>
+      <div class="tc" role="listitem">
+        <div class="tc-icon">🔍</div>
+        <div class="tc-title">BFS Level Verification</div>
+        <div class="tc-desc">All 15 levels run through a Python Breadth-First Search before being built into the game. Every gold tile guaranteed reachable from spawn — no unwinnable states ship to players.</div>
+        <div class="tc-code">verified: 15/15 levels<br>gold tiles checked: 312<br>unreachable: 0</div>
+      </div>
+      <div class="tc" role="listitem">
+        <div class="tc-icon">🤖</div>
+        <div class="tc-title">Enemy State Machine</div>
+        <div class="tc-desc">Each enemy has independent walkSpeed, thinkInterval, and goal state. Staggered start timers prevent mirroring — enemies feel like individuals rather than clones running the same script.</div>
+        <div class="tc-code">enum Goal {<br>&nbsp;&nbsp;case chase, patrol<br>}<br>thinkInterval: 4 + (i % 4)</div>
+      </div>
+      <div class="tc" role="listitem">
+        <div class="tc-icon">🎨</div>
+        <div class="tc-title">Theme Abstraction</div>
+        <div class="tc-desc">All colors, shapes, and collectible types live in a Theme struct. Swapping worlds at runtime is one property change — the renderer never hard-codes a single color value.</div>
+        <div class="tc-code">Theme.phantomGrid<br>Theme.sunkenMarket<br>// live toggle, no reload</div>
+      </div>
+      <div class="tc" role="listitem">
+        <div class="tc-icon">📱</div>
+        <div class="tc-title">Coordinate Bridge</div>
+        <div class="tc-desc">HTML canvas is top-left origin (Y down). SpriteKit is bottom-left origin (Y up). One gridToScreen() function handles all conversion — the rest of the game never thinks in pixels.</div>
+        <div class="tc-code">y = frame.height<br>&nbsp;&nbsp;- row * tileSize<br>&nbsp;&nbsp;- tileSize / 2</div>
+      </div>
+      <div class="tc" role="listitem">
+        <div class="tc-icon">⚡</div>
+        <div class="tc-title">Scene Graph Rendering</div>
+        <div class="tc-desc">SpriteKit creates tile nodes once at level load. Only changed tiles (dug holes) update. Canvas drew all 308 tiles every frame. This reduces per-frame work from O(n) to O(1) for static tiles.</div>
+        <div class="tc-code">// node created once<br>// only holes update<br>removeTileNode(col, row)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Q&A -->
+<section id="qa" aria-label="Interview questions and answers">
+  <div class="container">
+    <div class="eyebrow">The Story Behind the Build</div>
+    <div class="sec-title">Questions this project answers</div>
+    <p class="sec-desc">The decisions behind Phantom Grid are interview answers. Here are three of them in full.</p>
+
+    <div class="qa-stack" role="list">
+      <div class="qa-item" role="listitem">
+        <div class="qa-q">"Tell me about a technical challenge you diagnosed and solved."</div>
+        <div class="qa-a">The game ran <strong>twice as fast on my MacBook as on a phone</strong> — a frame-rate dependency bug. Game logic was tied to requestAnimationFrame, which fires at the display refresh rate: 120 times/second on a MacBook, 60 on a phone. I implemented a <strong>fixed-timestep accumulator</strong> — the same pattern used in AAA game engines — that decouples logic from render rate. Game logic now always runs at exactly 60 ticks/second regardless of hardware. I caught this in the web prototype before touching Swift, which meant the architecture was correct before porting began.</div>
+      </div>
+      <div class="qa-item" role="listitem">
+        <div class="qa-q">"Why did you choose SpriteKit over Unity or other game engines?"</div>
+        <div class="qa-a">SpriteKit was the <strong>right-sized tool for the problem</strong>. It ships with Xcode, has zero licensing cost, gets direct GPU access and Apple API integration (haptics, Game Center, Metal), and its scene graph architecture maps naturally to my tile-based grid. Unity would have introduced a full 3D engine, C# runtime, and hundreds of megabytes of overhead for a game that's fundamentally a 22×14 integer array with six tile types. <strong>Choosing the smallest tool that fully solves the problem is part of good engineering judgment</strong> — and something I apply from 18 years of QA systems design.</div>
+      </div>
+      <div class="qa-item" role="listitem">
+        <div class="qa-q">"How do you use AI in your development workflow?"</div>
+        <div class="qa-a">Three levels. <strong>Architectural pressure-testing</strong> — I use Claude to challenge design decisions before writing code. If I can't explain a choice to an AI that will push back on it, it's not a good enough decision. <strong>Autonomous implementation</strong> — Claude Code agent in Xcode 26.3 handles boilerplate, build errors, and refactoring while I focus on system design. <strong>Contextual learning</strong> — I ask it to explain Swift concepts in context of my actual codebase rather than textbook examples. The core discipline: <strong>every architectural decision is mine</strong>. AI is a force multiplier, not a replacement for judgment.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PROJECTS -->
+<section id="projects" aria-label="Ascendance projects">
+  <div class="container">
+    <div class="eyebrow">Ascendance Brand</div>
+    <div class="sec-title">What I've built</div>
+    <p class="sec-desc">Tools, systems, and products built under the Ascendance brand — each one solving a real problem I had.</p>
+
+    <div class="proj-grid" role="list">
+      <div class="proj-card hero-card" role="listitem">
+        <div class="proj-head">
+          <div class="proj-name">Phantom Grid</div>
+          <div class="proj-status s-active">IN DEV</div>
+        </div>
+        <div class="proj-desc">Native iOS arcade game. SpriteKit + Swift. 15 BFS-verified levels. Dual themes. Claude Code integration. App Store launch 2026.</div>
+        <div class="tag-row">
+          <span class="tag tag-teal">Swift</span>
+          <span class="tag tag-teal">SpriteKit</span>
+          <span class="tag tag-teal">iOS</span>
+        </div>
+      </div>
+      <div class="proj-card" role="listitem">
+        <div class="proj-head">
+          <div class="proj-name">AlphaForge Pro</div>
+          <div class="proj-status s-done">BUILT</div>
+        </div>
+        <div class="proj-desc">Multi-engine AI trading platform. Routes between Ollama (local LLM), Anthropic, and OpenRouter based on task. Manages 50-account prop firm farm across 10 firms.</div>
+        <div class="tag-row">
+          <span class="tag tag-muted">Python</span>
+          <span class="tag tag-purple">AI/LLM</span>
+          <span class="tag tag-muted">Futures</span>
+        </div>
+      </div>
+      <div class="proj-card" role="listitem">
+        <div class="proj-head">
+          <div class="proj-name">Ascendance Pine</div>
+          <div class="proj-status s-done">BUILT</div>
+        </div>
+        <div class="proj-desc">Claude API-powered Pine Script strategy generator. Describe a futures trading strategy in plain English, get working TradingView code back instantly.</div>
+        <div class="tag-row">
+          <span class="tag tag-purple">Claude API</span>
+          <span class="tag tag-muted">Pine Script</span>
+          <span class="tag tag-muted">JS</span>
+        </div>
+      </div>
+      <div class="proj-card" role="listitem">
+        <div class="proj-head">
+          <div class="proj-name">WSF PreOp Tracker</div>
+          <div class="proj-status s-done">BUILT</div>
+        </div>
+        <div class="proj-desc">Enterprise QA inspection system for Wayne-Sanderson Farms. 12 monthly sheets, 405 equipment points tracked, Python/openpyxl automated injection pipeline.</div>
+        <div class="tag-row">
+          <span class="tag tag-muted">Python</span>
+          <span class="tag tag-muted">openpyxl</span>
+          <span class="tag tag-muted">VBA</span>
+        </div>
+      </div>
+      <div class="proj-card" role="listitem">
+        <div class="proj-head">
+          <div class="proj-name">Career Command</div>
+          <div class="proj-status s-done">BUILT</div>
+        </div>
+        <div class="proj-desc">React-based personal ATS. Four tabs: job board search, match scan, resume tailor, standout plan. Claude API powers AI resume tailoring and job fit scoring.</div>
+        <div class="tag-row">
+          <span class="tag tag-muted">React</span>
+          <span class="tag tag-purple">Claude API</span>
+          <span class="tag tag-muted">HTML/CSS</span>
+        </div>
+      </div>
+      <div class="proj-card" role="listitem">
+        <div class="proj-head">
+          <div class="proj-name">Wealth Decoded</div>
+          <div class="proj-status s-build">BUILDING</div>
+        </div>
+        <div class="proj-desc">Faceless YouTube automation pipeline. PROSPECT niche scanner, Claude-wired script generator, automated publishing workflow for finance content channel.</div>
+        <div class="tag-row">
+          <span class="tag tag-purple">Claude API</span>
+          <span class="tag tag-muted">Python</span>
+          <span class="tag tag-muted">Automation</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- BACKGROUND -->
+<section id="background" aria-label="Background and credentials">
+  <div class="container">
+    <div class="eyebrow">Background</div>
+    <div class="sec-title">18 years of ops · now building tech</div>
+
+    <div class="bg-cols">
+      <div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--teal);letter-spacing:.14em;margin-bottom:14px;">CREDENTIALS &amp; EXPERIENCE</div>
+        <div class="cred-stack">
+          <div class="cred">
+            <div class="cred-yr">Active</div>
+            <div><div class="cred-title">PMP + PMI-ACP Candidate</div><div class="cred-org">PMI-approved applications · In progress</div></div>
+          </div>
+          <div class="cred">
+            <div class="cred-yr">2024</div>
+            <div><div class="cred-title">Lean Six Sigma Black Belt (SSBB)</div><div class="cred-org">Process Excellence · Apple's preferred cert</div></div>
+          </div>
+          <div class="cred">
+            <div class="cred-yr">2024</div>
+            <div><div class="cred-title">MBA</div><div class="cred-org">Western Governors University</div></div>
+          </div>
+          <div class="cred">
+            <div class="cred-yr">2024</div>
+            <div><div class="cred-title">Google Project Management Certificate</div><div class="cred-org">7/7 courses · Completed</div></div>
+          </div>
+          <div class="cred">
+            <div class="cred-yr">2024</div>
+            <div><div class="cred-title">IBM Generative AI for Executives</div><div class="cred-org">AI Strategy &amp; Enterprise Applications</div></div>
+          </div>
+          <div class="cred">
+            <div class="cred-yr">2006–</div>
+            <div><div class="cred-title">HACCP Supervisor · QA Program Lead</div><div class="cred-org">Wayne-Sanderson Farms · Bryan Complex, TX</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="side-stack">
+        <div class="box">
+          <div class="box-title">TARGET ROLES — FIT SCORE</div>
+          <div class="target-row"><span class="target-role">Apple — Strategic Quality PM</span><span class="target-fit">95%</span></div>
+          <div class="target-row"><span class="target-role">Google — Technical LPM</span><span class="target-fit">88%</span></div>
+          <div class="target-row"><span class="target-role">Meta — Technical PM</span><span class="target-fit">85%</span></div>
+          <div class="target-row"><span class="target-role">iOS Developer (Jr–Mid)</span><span class="target-fit">78%</span></div>
+          <div class="target-row"><span class="target-role">TAMU — Technical PM / IT</span><span class="target-fit">75%</span></div>
+        </div>
+        <div class="box">
+          <div class="box-title">TECH STACK</div>
+          <div class="tag-row">
+            <span class="tag tag-teal">Swift</span>
+            <span class="tag tag-teal">SpriteKit</span>
+            <span class="tag tag-teal">iOS / Xcode</span>
+            <span class="tag tag-muted">JavaScript</span>
+            <span class="tag tag-muted">Python</span>
+            <span class="tag tag-muted">React</span>
+            <span class="tag tag-muted">HTML / CSS</span>
+            <span class="tag tag-purple">Claude API</span>
+            <span class="tag tag-purple">Claude Code</span>
+            <span class="tag tag-gold">Pine Script</span>
+            <span class="tag tag-gold">Futures Trading</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- CONTACT -->
+<section id="contact" aria-label="Contact">
+  <div class="container">
+    <div class="eyebrow" style="text-align:center;">Let's talk</div>
+    <div class="contact-title">Open to TPM, PM &amp; iOS opportunities</div>
+    <p class="contact-sub">Bryan-College Station, TX &nbsp;·&nbsp; Remote-friendly &nbsp;·&nbsp; Available 2026</p>
+    <div class="contact-links">
+      <a href="https://www.linkedin.com/in/jaamihasan/" target="_blank" rel="noopener" class="cl cl-linkedin">LinkedIn ↗</a>
+      <a href="mailto:JaamiHasan89@gmail.com" class="cl cl-email">JaamiHasan89@gmail.com</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <p class="foot">Built by <span>Jaami Hasan</span> &nbsp;·&nbsp; Phantom Grid &nbsp;·&nbsp; Ascendance &nbsp;·&nbsp; 2026</p>
+  </div>
+</footer>
+
+<script>
+// Load game on click — avoids autoplay issues and keeps page load fast
+function loadGame() {
+  const iframe = document.getElementById('game-iframe');
+  const overlay = document.getElementById('game-overlay');
+  iframe.src = 'game.html';
+  overlay.style.display = 'none';
+  iframe.focus();
+}
+
+// Subtle parallax on hero grid
+const heroGrid = document.querySelector('.hero-grid-bg');
+window.addEventListener('scroll', () => {
+  if (heroGrid) heroGrid.style.transform = `translateY(${window.scrollY * 0.25}px)`;
+}, { passive: true });
+
+// Smooth scroll for all anchor links
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  });
+});
+</script>
+
+</body>
+</html>
