@@ -326,9 +326,27 @@ const BASE_HOLE=320,MIN_HOLE=160;
 
 // ── Canvas ─────────────────────────────────────────────────
 const canvas=document.getElementById('gc');
-canvas.width=W; canvas.height=H;
+
+// Scale canvas to fit screen width while keeping aspect ratio
+function resizeCanvas(){
+  const maxW = Math.min(window.innerWidth - 16, 900);
+  const scale = maxW / W;
+  const dispW = Math.floor(W * scale);
+  const dispH = Math.floor(H * scale);
+  canvas.width = W;
+  canvas.height = H;
+  canvas.style.width = dispW + 'px';
+  canvas.style.height = dispH + 'px';
+  document.getElementById('wrap').style.setProperty('--w', dispW+'px');
+  document.getElementById('wrap').style.width = dispW + 'px';
+  const hud = document.getElementById('hud');
+  if(hud) hud.style.maxWidth = dispW + 'px';
+  const ctrl = document.getElementById('ctrl');
+  if(ctrl) ctrl.style.maxWidth = dispW + 'px';
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
 const ctx=canvas.getContext('2d');
-document.getElementById('wrap').style.setProperty('--w',W+'px');
 
 // ── Audio ──────────────────────────────────────────────────
 const AC=new(window.AudioContext||window.webkitAudioContext)();
