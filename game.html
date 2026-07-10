@@ -29,12 +29,11 @@ canvas{display:block;}
 #title-ov .title{font-size:clamp(18px,4vw,28px);font-weight:700;color:#2dd4bf;letter-spacing:4px;margin-bottom:4px;}
 #title-ov .sub{font-size:9px;color:#64748b;letter-spacing:2px;margin-bottom:8px;}
 #title-ov .hs{font-size:8px;color:#2dd4bf;margin-bottom:4px;}
-.theme-row{display:flex;gap:8px;margin:4px 0 8px;}
+
 .tbtn{font-family:'Space Mono',monospace;font-size:9px;font-weight:700;padding:7px 12px;border:1.5px solid;cursor:pointer;border-radius:3px;letter-spacing:1px;transition:all .15s;}
 .tbtn.phantom{background:#0f172a;border-color:#2dd4bf;color:#2dd4bf;}
 .tbtn.phantom.active{background:#134e4a;border-color:#5eead4;color:#ccfbf1;outline:2px solid #2dd4bf;outline-offset:2px;}
-.tbtn.sunken{background:#f5edd6;border-color:#7c2d00;color:#7c2d00;}
-.tbtn.sunken.active{background:#fff7ed;border-color:#c2410c;color:#7c2d00;outline:2px solid #c2410c;outline-offset:2px;}
+
 .menu-btns{display:flex;flex-direction:column;gap:7px;width:min(220px,80%);}
 /* game over */
 #gameover-ov .go-title{font-size:22px;font-weight:700;color:#f87171;letter-spacing:3px;}
@@ -101,6 +100,8 @@ canvas{display:block;}
 .bk.empty{background:none!important;border:none!important;cursor:default;}
 .bk.dig{width:58px;font-size:7px;}
 #info{margin-top:8px;font-size:6px;color:#334155;letter-spacing:1px;text-align:center;}
+.dig-ovl-btn{font-family:'Space Mono',monospace;font-size:12px;font-weight:700;padding:12px 20px;border:2px solid #ea580c;background:rgba(15,23,42,0.9);color:#fed7aa;border-radius:6px;cursor:pointer;pointer-events:all;touch-action:manipulation;user-select:none;letter-spacing:1px;}
+.dig-ovl-btn:active{background:#ea580c;color:#020617;}
 /* countdown */
 #countdown-wrap{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:40;}
 #countdown-num{font-size:96px;font-weight:700;color:#fde68a;text-shadow:3px 3px 0 #000010;transition:none;line-height:1;}
@@ -134,6 +135,12 @@ canvas{display:block;}
 <!-- COUNTDOWN -->
 <div id="countdown-wrap" class="hidden"><div id="countdown-num">3</div></div>
 
+<!-- DIG BUTTONS OVERLAY -->
+<div id="dig-overlay" style="position:absolute;bottom:12px;left:0;right:0;display:none;justify-content:center;gap:16px;z-index:61;pointer-events:none;">
+  <button class="dig-ovl-btn" onpointerdown="tryDig('left')">◀ DIG</button>
+  <button class="dig-ovl-btn" onpointerdown="tryDig('right')">DIG ▶</button>
+</div>
+
 <!-- TITLE / MAIN MENU -->
 <div id="title-ov" class="ov">
   <div class="obg"></div>
@@ -141,10 +148,6 @@ canvas{display:block;}
     <div class="title">PHANTOM GRID</div>
     <div class="sub">COLLECT ALL ORBS · DIG · TRAP · ESCAPE</div>
     <div class="hs" id="t-hs"></div>
-    <div class="theme-row">
-      <button class="tbtn phantom active" id="tbtn-p" onclick="selectTheme('phantom')">PHANTOM GRID<br><span style="font-size:7px;opacity:.7">MIDNIGHT TEAL</span></button>
-      <button class="tbtn sunken" id="tbtn-s" onclick="selectTheme('sunken')">SUNKEN MARKET<br><span style="font-size:7px;opacity:.7">WARM PARCHMENT</span></button>
-    </div>
     <div class="menu-btns">
       <button class="btn btn-teal" onclick="startGame()">▶ PLAY</button>
       <button class="btn btn-outline" onclick="showLevelSelect()">⊞ LEVEL SELECT</button>
@@ -219,6 +222,8 @@ canvas{display:block;}
     <div id="stab-game" class="s-section">
       <div class="s-row"><span>SPEED <span id="sp-val">Normal</span></span><input type="range" id="sp-sl" min="1" max="5" value="3" oninput="applySpeed(this.value)"></div>
       <div class="s-row"><span>DIFFICULTY <span id="df-val">Normal</span></span><input type="range" id="df-sl" min="1" max="3" value="2" oninput="applyDifficulty(this.value)"></div>
+      <div class="s-row"><span>LADDER ASSIST</span><label class="s-toggle"><input type="checkbox" id="la-tog" checked onchange="ladderAssistEnabled=this.checked;localStorage.setItem('pg_ladder_assist',this.checked?1:0)"><div class="s-track"></div></label></div>
+      <div class="s-row"><span>DIG BUTTONS</span><label class="s-toggle"><input type="checkbox" id="db-tog" onchange="toggleDigButtons(this.checked)"><div class="s-track"></div></label></div>
       <div class="s-row"><span>CHANGE PLAYER</span><button class="btn btn-muted" style="font-size:7px;padding:4px 8px;" onclick="changePlayer()">CHANGE</button></div>
     </div>
     <!-- AUDIO TAB -->
@@ -374,17 +379,11 @@ document.addEventListener('keydown',()=>AC.resume(),{once:true});
 let currentTheme='phantom';
 const THEMES={
   phantom:{name:'PHANTOM GRID',sky:'#020617',bk:'#0f172a',bf:'#1e293b',bm:'#020617',ld:'#2dd4bf',lr:'#0d9488',br:'#1e3a5f',bs:'#2dd4bf',gd:'#fde68a',gs:'#fff',py:'#ccfbf1',pd:'#0d9488',en:'#7c3aed',ed:'#4c1d95',eh:'#6d28d9',hl:'#000010',eEye:'#fde68a',flash:'#ffffff',goldCircle:true},
-  sunken:{name:'SUNKEN MARKET',sky:'#f5edd6',bk:'#b8842a',bf:'#d4a053',bm:'#8b5e1a',ld:'#6b3f0e',lr:'#92580f',br:'#8b5e1a',bs:'#d4a053',gd:'#e85d04',gs:'#fff7ed',py:'#1d3a5f',pd:'#0c1f3a',en:'#7c2d00',ed:'#431407',eh:'#9a3412',hl:'#3d1a00',eEye:'#f5edd6',flash:'#ffe0a0',goldCircle:false},
+
 };
 function C(){return THEMES[currentTheme];}
-function selectTheme(n){
-  currentTheme=n;
-  document.body.style.background=C().sky;
-  ['p','s'].forEach(x=>document.getElementById('tbtn-'+x).classList.toggle('active',x===n[0]));
-  localStorage.setItem('pg_theme',n);
-  if(gameState!=='idle')draw();
-}
-(function(){const t=localStorage.getItem('pg_theme');if(t)selectTheme(t);})();
+// Theme locked to Phantom Grid
+function selectTheme(n){ currentTheme='phantom'; }
 
 // ── Difficulty ─────────────────────────────────────────────
 let settingSpeed=3,settingDiff=2;
@@ -399,11 +398,29 @@ function applySpeed(v){settingSpeed=+v;PLAYER_WALK=SPEED_PW[v];PLAYER_FALL=SPEED
 function applyDifficulty(v){settingDiff=+v;document.getElementById('df-val').textContent=DIFF_LABELS[v];localStorage.setItem('pg_diff',v);}
 function enemySpeed(lvl){return Math.round(Math.max(13,22-Math.floor(lvl*.65))*DIFF_ES[settingDiff]);}
 function holeLife(lvl){return Math.round(Math.max(MIN_HOLE,(BASE_HOLE-lvl*11)*DIFF_HL[settingDiff]));}
+let ladderAssistEnabled = localStorage.getItem('pg_ladder_assist')!=='0';
+let digButtonsVisible = false;
+
+function toggleDigButtons(on){
+  digButtonsVisible=on;
+  const ov=document.getElementById('dig-overlay');
+  if(ov) ov.style.display=on?'flex':'none';
+  localStorage.setItem('pg_dig_buttons',on?1:0);
+}
+
 (function(){
   const sp=+localStorage.getItem('pg_speed')||3;
   const df=+localStorage.getItem('pg_diff')||2;
   document.getElementById('sp-sl').value=sp; applySpeed(sp);
   document.getElementById('df-sl').value=df; applyDifficulty(df);
+  // Restore dig buttons state
+  const db=localStorage.getItem('pg_dig_buttons')==='1';
+  const dbTog=document.getElementById('db-tog');
+  if(dbTog){dbTog.checked=db; if(db)toggleDigButtons(true);}
+  // Restore ladder assist
+  const la=localStorage.getItem('pg_ladder_assist')!=='0';
+  const laTog=document.getElementById('la-tog');
+  if(laTog) laTog.checked=la;
 })();
 
 // ── Level names & data ─────────────────────────────────────
@@ -578,10 +595,35 @@ function stepPlayer(){
   let mv=false;
   if(keys['ArrowLeft']){player.facing=-1;const nc=c-1;if(nc>=0&&isPass(nc,r)&&(onG||onB||isBar(nc,r))){player.col=nc;mv=true;}}
   else if(keys['ArrowRight']){player.facing=1;const nc=c+1;if(nc<COLS&&isPass(nc,r)&&(onG||onB||isBar(nc,r))){player.col=nc;mv=true;}}
-  if(keys['ArrowUp']&&onL){const nr=r-1;if(nr>=0&&isPass(c,nr)){player.row=nr;mv=true;}}
+  if(keys['ArrowUp']){
+    if(onL){const nr=r-1;if(nr>=0&&isPass(c,nr)){player.row=nr;mv=true;}}
+    else if(ladderAssistEnabled&&!mv){
+      // Ladder assist — check adjacent columns
+      for(const dc of[-1,1]){
+        const nc=c+dc;
+        if(nc>=0&&nc<COLS&&isLad(nc,r)&&isPass(nc,r)){
+          player.col=nc;
+          const nr=r-1;
+          if(nr>=0&&isPass(nc,nr)){player.row=nr;}
+          mv=true;break;
+        }
+      }
+    }
+  }
   else if(keys['ArrowDown']){
     if(onL&&r+1<ROWS&&isPass(c,r+1)&&!isActiveHole(c,r+1)){player.row=r+1;mv=true;}
     if(!mv&&onG&&isLad(c,r+1)&&r+1<ROWS){player.row=r+1;mv=true;}
+    if(!mv&&ladderAssistEnabled){
+      for(const dc of[-1,1]){
+        const nc=c+dc;
+        if(nc>=0&&nc<COLS&&isLad(nc,r)&&isPass(nc,r)){
+          player.col=nc;
+          const nr=r+1;
+          if(nr<ROWS&&isPass(nc,nr)&&!isActiveHole(nc,nr)){player.row=nr;}
+          mv=true;break;
+        }
+      }
+    }
   }
   if(mv)player.frame=(player.frame+1)%4;
   checkEC();
@@ -713,10 +755,21 @@ function respawnEnemy(e){
 }
 
 // ── Holes ─────────────────────────────────────────────────────
+// Track which holes have warnings shown
+const holesWarned=new Set();
+
 function stepHoles(){
   for(let i=holeTimers.length-1;i>=0;i--){
     const h=holeTimers[i];h.timer--;
+    // Show warning when hole about to close
+    const key=h.col+'_'+h.row;
+    if(h.timer<80 && !holesWarned.has(key)){
+      holesWarned.add(key);
+      showHoleWarning(h.col,h.row);
+    }
     if(h.timer<=0){
+      holesWarned.delete(key);
+      removeHoleWarning(h.col,h.row);
       enemies.filter(e=>e.col===h.col&&e.row===h.row&&e.inHole).forEach(respawnEnemy);
       if(player.col===h.col&&player.row===h.row&&!player.dead)killPlayer();
       grid[h.row][h.col]=T.B;
@@ -725,14 +778,57 @@ function stepHoles(){
   }
 }
 
+function showHoleWarning(c,r){
+  // Will be drawn in the draw loop via holeWarnings set
+}
+function removeHoleWarning(c,r){
+  // Cleaned up automatically
+}
+
 // ── Kill ───────────────────────────────────────────────────────
 function killPlayer(){
   if(player.dead||teleporting)return;
   player.dead=true;lives--;updateHUD();sndDeath();
+  // Death flash
+  flashDeathScreen();
+  // -1 LIFE text
+  showLifeLost();
+  // Flash lives HUD
+  flashLivesHUD();
   setTimeout(()=>{
     if(lives<=0){showGameOver();}
     else{softRespawn();}
   },900);
+}
+
+function flashDeathScreen(){
+  const wrap=document.getElementById('wrap');
+  const flash=document.createElement('div');
+  flash.style.cssText='position:absolute;inset:0;background:rgba(239,68,68,0.45);z-index:88;pointer-events:none;';
+  wrap.appendChild(flash);
+  setTimeout(()=>flash.remove(),400);
+}
+
+function showLifeLost(){
+  const wrap=document.getElementById('wrap');
+  const el=document.createElement('div');
+  el.textContent='-1 LIFE';
+  el.style.cssText='position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-family:Space Mono,monospace;font-size:28px;font-weight:700;color:#f87171;text-shadow:2px 2px 0 #000;z-index:89;pointer-events:none;transition:all 1.2s;';
+  wrap.appendChild(el);
+  setTimeout(()=>{ el.style.transform='translate(-50%,-120%)'; el.style.opacity='0'; },100);
+  setTimeout(()=>el.remove(),1300);
+}
+
+function flashLivesHUD(){
+  const lv=document.getElementById('h-lives');
+  if(!lv)return;
+  let count=0;
+  const orig=lv.style.color;
+  const iv=setInterval(()=>{
+    lv.style.color=count%2===0?'#f87171':'#2dd4bf';
+    count++;
+    if(count>=6){clearInterval(iv);lv.style.color=orig;}
+  },150);
 }
 
 // ── Draw ───────────────────────────────────────────────────────
@@ -937,7 +1033,13 @@ function togglePause(){
   if(gameState!=='playing')return;
   paused=!paused;
   document.getElementById('pause-ov').classList.toggle('hidden',!paused);
-  document.getElementById('pause-info').textContent=`LVL ${level+1} · SCORE ${score}`;
+  document.getElementById('pause-info').textContent='LVL '+(level+1)+' · SCORE '+score;
+  // Freeze/unfreeze game loop
+  if(paused){
+    // Store last time to prevent time jump on resume
+    lastTime=0;
+    accumulator=0;
+  }
 }
 
 // ── Level Select ─────────────────────────────────────────────
