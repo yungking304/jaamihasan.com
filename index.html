@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Jaami Hasan — Technical Program Manager, iOS Developer, and founder of Ascendance. Building Phantom Grid for iOS.">
+<meta name="description" content="Jaami Hasan — Technical Program Manager, iOS Developer. Shipped The Phantom Grid to TestFlight. SSBB · MBA · PMP · Google PM Cert.">
 <meta property="og:title" content="Jaami Hasan — Builder">
-<meta property="og:description" content="18 years building systems that don't fail. Now building iOS. Technical PM · iOS Developer · Founder @Ascendance.">
+<meta property="og:description" content="18 years building systems that don't fail. Shipped The Phantom Grid iOS game to TestFlight. Technical PM · iOS Developer · PMP.">
 <meta property="og:url" content="https://jaamihasan.com">
 <meta name="twitter:card" content="summary_large_image">
 <title>Jaami Hasan — Builder</title>
@@ -99,7 +99,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(2,6,23,.9);b
 .themes-row{display:flex;gap:10px;}
 .theme-chip{font-family:var(--mono);font-size:10px;font-weight:700;padding:5px 14px;border-radius:20px;letter-spacing:.06em;}
 .chip-phantom{background:rgba(45,212,191,.12);color:var(--teal);border:1px solid rgba(45,212,191,.3);}
-.chip-sunken{background:rgba(253,230,138,.1);color:var(--gold);border:1px solid rgba(253,230,138,.3);}
+
 .appstore-strip{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;}
 .as-text{font-size:11px;color:var(--muted);}
 .as-title{font-size:14px;font-weight:600;color:var(--white);margin-top:2px;}
@@ -222,11 +222,11 @@ footer{padding:30px 0;border-top:1px solid var(--border);text-align:center;}
       OPEN TO TPM · iOS · PROGRAM MANAGER ROLES
     </div>
     <div class="hero-name">Jaami<br>Hasan</div>
-    <div class="hero-role">Technical PM &nbsp;·&nbsp; iOS Developer &nbsp;·&nbsp; Founder @Ascendance</div>
+    <div class="hero-role">Technical PM &nbsp;·&nbsp; iOS Developer &nbsp;·&nbsp; SSBB &nbsp;·&nbsp; MBA &nbsp;·&nbsp; PMP</div>
     <p class="hero-bio">
       <strong>18 years building systems that don't fail</strong> — from HACCP food safety
       programs to AI-powered trading platforms to a native iOS arcade game. SSBB · MBA ·
-      Google PM Cert · PMP candidate. Bryan-College Station, TX.
+      Google PM Cert · PMP · SSBB. Bryan-College Station, TX.
     </p>
     <div class="cta-row">
       <a href="#game" class="btn btn-primary">See Phantom Grid ↓</a>
@@ -247,7 +247,7 @@ footer{padding:30px 0;border-top:1px solid var(--border);text-align:center;}
       </div>
       <div class="stat-cell" role="listitem">
         <div class="stat-num teal" style="font-size:22px;animation:pulse 2s ease-in-out infinite;">●</div>
-        <div class="stat-label">BUILDING<br>NOW</div>
+        <div class="stat-label">TESTFLIGHT<br>LIVE</div>
       </div>
     </div>
   </div>
@@ -260,7 +260,7 @@ footer{padding:30px 0;border-top:1px solid var(--border);text-align:center;}
   <div class="container">
     <div class="eyebrow">Current Project</div>
     <div class="sec-title">Phantom Grid</div>
-    <p class="sec-desc">A grid-based arcade game inspired by Lode Runner (1983), rebuilt from scratch with modern architecture. Play it right here — coming to the iOS App Store in 2026.</p>
+    <p class="sec-desc">A native iOS arcade game built in Swift and SpriteKit. 15 BFS-verified levels, enemy AI, haptic feedback, leaderboard system, and 6 control schemes. Live on TestFlight — App Store submission in progress.</p>
 
     <div class="game-layout">
       <!-- GAME EMBED -->
@@ -307,7 +307,7 @@ footer{padding:30px 0;border-top:1px solid var(--border);text-align:center;}
           </div>
           <div class="feature">
             <div class="feature-bullet">▸</div>
-            <div class="feature-body"><strong>Dual visual themes</strong> — Phantom Grid (midnight teal) and Sunken Market (warm parchment). Toggle live, no restart needed.</div>
+            <div class="feature-body"><strong>6 control schemes</strong> — D-Pad, Drag Anywhere, Joystick, Follow Finger, and dig button overlay. Every player finds their style.</div>
           </div>
           <div class="feature">
             <div class="feature-bullet">▸</div>
@@ -319,16 +319,16 @@ footer{padding:30px 0;border-top:1px solid var(--border);text-align:center;}
           <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.1em;margin-bottom:10px;">THEMES</div>
           <div class="themes-row">
             <div class="theme-chip chip-phantom">◉ PHANTOM GRID</div>
-            <div class="theme-chip chip-sunken">◎ SUNKEN MARKET</div>
+            <div class="theme-chip chip-teal">⚙ 6 CONTROL SCHEMES</div>
           </div>
         </div>
 
         <div class="appstore-strip">
           <div>
             <div class="as-text">COMING TO</div>
-            <div class="as-title">App Store — iOS 2026</div>
+            <div class="as-title">TestFlight Beta — iOS</div>
           </div>
-          <div class="as-pill">IN DEVELOPMENT</div>
+          <div class="as-pill" style="background:rgba(45,212,191,0.15);color:#2dd4bf;border-color:rgba(45,212,191,0.4);">LIVE IN BETA</div>
         </div>
 
         <div class="tag-row">
@@ -376,7 +376,7 @@ footer{padding:30px 0;border-top:1px solid var(--border);text-align:center;}
         <div class="tc-icon">🎨</div>
         <div class="tc-title">Theme Abstraction</div>
         <div class="tc-desc">All colors, shapes, and collectible types live in a Theme struct. Swapping worlds at runtime is one property change — the renderer never hard-codes a single color value.</div>
-        <div class="tc-code">Theme.phantomGrid<br>Theme.sunkenMarket<br>// live toggle, no reload</div>
+        <div class="tc-code">ControlScheme.dpad<br>ControlScheme.joystick<br>ControlScheme.dragAnywhere<br>// player picks their style</div>
       </div>
       <div class="tc" role="listitem">
         <div class="tc-icon">📱</div>
@@ -410,7 +410,7 @@ footer{padding:30px 0;border-top:1px solid var(--border);text-align:center;}
       </div>
       <div class="qa-item" role="listitem">
         <div class="qa-q">"Why did you choose SpriteKit over Unity or other game engines?"</div>
-        <div class="qa-a">SpriteKit was the <strong>right-sized tool for the problem</strong>. It ships with Xcode, has zero licensing cost, gets direct GPU access and Apple API integration (haptics, Game Center, Metal), and its scene graph architecture maps naturally to my tile-based grid. Unity would have introduced a full 3D engine, C# runtime, and hundreds of megabytes of overhead for a game that's fundamentally a 22×14 integer array with six tile types. <strong>Choosing the smallest tool that fully solves the problem is part of good engineering judgment</strong> — and something I apply from 18 years of QA systems design.</div>
+        <div class="qa-a">SpriteKit was right for the initial iOS build — native, zero overhead, direct Metal access. After shipping to TestFlight I made the deliberate decision to port to Unity for Android/Google Play distribution, rebuilding the entire codebase in C#. <strong>Choosing the right tool for each stage of a product's lifecycle is part of good engineering judgment</strong> — and something I apply from 18 years of QA systems design.</div>
       </div>
       <div class="qa-item" role="listitem">
         <div class="qa-q">"How do you use AI in your development workflow?"</div>
@@ -435,7 +435,7 @@ footer{padding:30px 0;border-top:1px solid var(--border);text-align:center;}
           <div class="proj-name">Phantom Grid</div>
           <div class="proj-status s-active">IN DEV</div>
         </div>
-        <div class="proj-desc">Native iOS arcade game. SpriteKit + Swift. 15 BFS-verified levels. Dual themes. Claude Code integration. App Store launch 2026.</div>
+        <div class="proj-desc">Native iOS arcade game in Swift + SpriteKit. 15 BFS-verified levels, enemy AI, leaderboard, haptics, 6 control schemes. Live on TestFlight. Unity/Android port in progress.</div>
         <div class="tag-row">
           <span class="tag tag-teal">Swift</span>
           <span class="tag tag-teal">SpriteKit</span>
@@ -520,7 +520,7 @@ footer{padding:30px 0;border-top:1px solid var(--border);text-align:center;}
         <div class="cred-stack">
           <div class="cred">
             <div class="cred-yr">Active</div>
-            <div><div class="cred-title">PMP + PMI-ACP Candidate</div><div class="cred-org">PMI-approved applications · In progress</div></div>
+            <div><div class="cred-title">PMP · PMI-ACP Candidate</div><div class="cred-org">PMP certified · PMI-ACP in progress</div></div>
           </div>
           <div class="cred">
             <div class="cred-yr">2024</div>
