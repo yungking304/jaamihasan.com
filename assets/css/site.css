@@ -153,18 +153,18 @@ img.is-missing { visibility: hidden; }
 }
 
 @media (max-width: 620px) {
-  .nav-inner { min-height: 70px; }
-  .brand { font-size: 10px; letter-spacing: .22em; }
-  .theme-toggle, .nav-toggle { min-width: 48px; min-height: 48px; }
-  .hero { min-height: 82svh; align-items: flex-end; }
-  .hero-media { width: 100%; left: 0; }
-  .hero-media img { object-position: 58% 14%; filter: saturate(.86) contrast(1.03) brightness(.62); }
-  .hero-media::before { width: 55%; background: linear-gradient(90deg, color-mix(in srgb, var(--ink) 78%, transparent) 0%, transparent 100%); }
-  .hero-media::after { background: linear-gradient(180deg, transparent 36%, color-mix(in srgb, var(--ink) 82%, transparent) 100%); }
-  .hero-content { padding-top: 110px; padding-bottom: 38px; }
-  .hero-signature { font-size: clamp(68px, 22vw, 104px); max-width: 78%; margin-bottom: 20px; }
-  .hero-role { max-width: 90%; gap: 6px 9px; font-size: 8px; line-height: 1.8; }
-  .hero-role span:not(:last-child)::after { margin-left: 9px; }
+  .nav-inner { min-height: 64px; gap: 10px; }
+  .brand { font-size: 9px; letter-spacing: .24em; }
+  .theme-toggle, .nav-toggle { min-width: 44px; min-height: 44px; font-size: 14px; }
+  .hero { min-height: 72svh; align-items: center; }
+  .hero-media { width: 72%; left: auto; right: -6%; }
+  .hero-media img { object-position: 52% 12%; filter: saturate(.86) contrast(1.03) brightness(.66); }
+  .hero-media::before { width: 72%; background: linear-gradient(90deg, var(--ink) 0%, color-mix(in srgb, var(--ink) 72%, transparent) 42%, transparent 100%); }
+  .hero-media::after { background: linear-gradient(180deg, color-mix(in srgb, var(--ink) 18%, transparent) 0%, transparent 48%, color-mix(in srgb, var(--ink) 74%, transparent) 100%); }
+  .hero-content { padding-top: 96px; padding-bottom: 0; }
+  .hero-signature { font-size: clamp(54px, 16vw, 72px); line-height: .78; max-width: none; margin-bottom: 14px; white-space: nowrap; }
+  .hero-role { max-width: none; flex-wrap: nowrap; gap: 0; white-space: nowrap; font-size: clamp(6px, 1.75vw, 8px); line-height: 1.4; letter-spacing: .15em; }
+  .hero-role span:not(:last-child)::after { margin-left: 7px; margin-right: 7px; }
   .section { padding-block: 56px; }
   .career-panel, .project-panel, .contact-strip { border-left: 0; border-right: 0; }
   .career-copy, .project-copy { padding: 34px 0; background: var(--page); }
