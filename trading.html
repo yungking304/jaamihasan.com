@@ -226,107 +226,367 @@ if(Store.get('fs_open')!=='1'){
    Example: https://youtube.com/watch?v=dQw4w9WgXcQ  →  yt:"dQw4w9WgXcQ"
    Leave it empty and the slot shows a placeholder.                        */
 const COURSE=[
-{
- id:"m1",title:"Contract Mechanics",mins:5,
- outcomes:["Read a contract spec sheet and know what one tick is worth","Turn a price move into dollars before you place the trade","Say why a micro is the only sane place to start"],
- topics:["What a futures contract obligates you to do","Full-size, mini, micro: same market, different bet size","Tick size, tick value, point value","Contract months, expiration and rollover"],
- videos:[{yt:"Dh5KFZqEHqU",label:"Futures Trading Explained For Beginners in 5 Minutes"}],
- quiz:[
-  {q:"MGC moves in 0.10 ticks worth $1.00 each. Gold rises 4.0 points and you're long one contract. What did you make?",
-   a:["$4","$40","$400","$1,000"],c:1,
-   why:"4.0 points ÷ 0.10 = 40 ticks. 40 × $1.00 = $40. Every futures P&L question is this same two-step: convert the move to ticks, multiply by tick value."},
-  {q:"Why do commercial hedgers use futures?",
-   a:["To make money on price direction","To lock in a price for something they'll buy or sell later","Because leverage is cheaper than stocks","To avoid taxes on physical goods"],c:1,
-   why:"A producer locks in a selling price, a manufacturer locks in a buying cost. Speculators take the other side and get paid for carrying that risk. The market exists for the hedgers — you're the guest."},
-  {q:"What is rollover?",
-   a:["Reinvesting profits into a bigger position","Volume and open interest moving to the next contract month as expiration nears","The broker resetting your margin overnight","Carrying a losing trade past the session close"],c:1,
-   why:"Contracts expire. Liquidity migrates to the front month, and if you're charting the old one you're trading a ghost. Know your roll dates."}]
-},
-{
- id:"m2",title:"Account & Execution",mins:3,
- outcomes:["Explain what margin actually is and what it isn't","Place, bracket and flatten a position without hesitating","Choose between a personal account and a prop evaluation with clear eyes"],
- topics:["Day-trade margin vs initial and maintenance margin","Order types: market, limit, stop, stop-limit, bracket/OCO","Sessions: Globex open, Asia, London, New York","Prop firm evaluations: rules, drawdown types, what you're buying"],
- videos:[{yt:"Phkue5TmwRc",label:"Prop Firm vs Personal Account: What Every Futures Trader Needs to Know"},{yt:"rJj4ZbnzEGs",label:"How To Use TradingView For Beginners — platform tour"}],
- explainer:"<p>Margin is not a cost and not a down payment. It's a good-faith deposit the exchange holds while your position is open, and it's the reason a few hundred dollars can control a contract worth tens of thousands. That ratio is leverage, and it works identically in both directions.</p><p>There are two numbers. <strong>Initial margin</strong> is set by the exchange and applies if you hold past the session close. <strong>Day-trade margin</strong> is set by your broker, is often a fraction of the initial figure, and evaporates at a specific clock time — miss it and you either owe the full amount or get auto-liquidated at whatever price the market offers. Find that exact time in your broker's docs before your first trade.</p><p>Four order types cover almost everything. A <strong>market</strong> order fills now at whatever price exists. A <strong>limit</strong> order fills at your price or better, or not at all. A <strong>stop</strong> becomes a market order once price touches your level — so it fills, but not necessarily where you wanted. A <strong>stop-limit</strong> gives you price control and accepts the risk of no fill.</p><p>Wrap every entry in a <strong>bracket</strong> — a target and a stop submitted together as an OCO pair. When one fills the other cancels itself. Without it, a filled target can leave an orphaned stop sitting in the market, ready to open a fresh position in the opposite direction while you're away from the screen.</p><p>If you're using a prop evaluation, the rule that ends most accounts is the <strong>trailing drawdown</strong>. It follows your highest account peak, and at many firms that peak includes open, unrealised profit. Run $600 up and give it back, and your loss limit has already ratcheted up behind you. Read the exact wording before you pay the fee.</p>",
- quiz:[
-  {q:"Day-trade margin is lower than initial margin because…",
-   a:["The exchange discounts intraday risk","Your broker sets it, and it only applies if you're flat by the session close","Micros are exempt from exchange margin","It's a promotional rate for new accounts"],c:1,
-   why:"Day margin is a broker courtesy, not an exchange rule. Hold past the cutoff and you owe full initial margin — or get auto-liquidated. Know your broker's exact time."},
-  {q:"You place a bracket (OCO) around a long position. Your target fills. What happens to the stop?",
-   a:["It stays live and could open a short","It cancels automatically","It converts to a market order","It trails the new price"],c:1,
-   why:"One cancels the other — that's the whole point. Without a bracket, an orphaned stop can flip you into a position you never intended."},
-  {q:"On most prop evaluations, a trailing drawdown limit follows…",
-   a:["Your starting balance only","Your highest account peak, including unrealized gains","The daily loss limit","The average of your last ten trades"],c:1,
-   why:"This is what quietly kills accounts. Run up $600 in open profit, give it back, and your loss limit has already moved up with the peak. Read the exact wording before you pay a fee."}]
-},
-{
- id:"m3",title:"Risk First",mins:4,risk:true,
- outcomes:["Size a position from your stop instead of your hope","Express every trade as a multiple of R","Know your daily stop and honour it without negotiating"],
- topics:["Risk per trade: the fixed-percentage method","Position sizing math, worked twice","The R concept — one unit of risk, every trade","Daily loss limit and the walk-away rule"],
- videos:[{yt:"O0SNjO9CyQ8",label:"How to Calculate Risk in Futures (Simplified in 5 Minutes)"}],
- explainer:"<p>Position size is not a feeling. It's arithmetic, and it runs in one direction only: the chart tells you where the stop goes, the stop tells you how many contracts you can hold. Reverse that order — pick a size first, then place a stop where it feels comfortable — and you've quietly decided to lose more than you planned.</p><p>Three inputs. What you'll risk on this trade, how far the stop sits in ticks, and what a tick is worth.</p><div class='calc'><span class='r'>Account</span> $5,000<br><span class='r'>Risk per trade</span> 1% = <b>$50</b><br><span class='r'>Stop distance</span> 25 ticks<br><span class='r'>Tick value</span> $1.00<br><br><span class='r'>Risk per contract</span> 25 × $1.00 = <b>$25</b><br><span class='r'>Contracts</span> $50 ÷ $25 = <b>2</b></div><p>Always round down. A fractional answer of 2.8 means two contracts, not three.</p><p>Now stop thinking in dollars. That $50 is <strong>1R</strong> — one unit of risk. A trade that makes $150 is a 3R winner whether you were trading one micro or ten. Speaking in R lets you compare trades across account sizes, spot which setups actually pay, and see instantly that a 3R win erases three losses.</p><p>Set a daily stop as well as a per-trade stop. Two or three losses in a row is a normal Tuesday, not a signal to trade bigger. When the daily number hits, the platform closes — that decision is made now, in advance, not in the moment when you're down and reasoning badly.</p><p>The reason all of this matters is that losses and gains are not symmetric:</p><div class='calc'><span class='r'>Down 10%</span> → need <b>+11%</b> to recover<br><span class='r'>Down 25%</span> → need <b>+33%</b><br><span class='r'>Down 50%</span> → need <b>+100%</b><br><span class='r'>Down 75%</span> → need <b>+300%</b></div><p>Small, consistent risk isn't timidity. It's the only thing that keeps the recovery math survivable.</p>",
- rules:["Never move a stop away from price.","Never add to a loser.","When the daily stop hits, the platform closes."],
- quiz:[
-  {q:"You'll risk $50 on a trade. Your stop is 25 ticks away and each tick is worth $1.00. How many contracts?",
-   a:["1","2","5","25"],c:1,
-   why:"25 ticks × $1.00 = $25 of risk per contract. $50 ÷ $25 = 2 contracts. Notice the order: the stop comes from the chart, the size comes from the stop. Never the reverse."},
-  {q:"You're down 50% on the account. What gain gets you back to even?",
-   a:["50%","75%","100%","150%"],c:2,
-   why:"$10,000 down 50% is $5,000, and $5,000 must double to return. Losses compound against you harder than gains compound for you — which is the entire argument for small risk per trade."},
-  {q:"Price is approaching your stop and the setup 'still looks good.' What do you do?",
-   a:["Widen the stop to give it room","Add a contract to improve the average","Let the stop do its job","Close half and widen the rest"],c:2,
-   why:"The stop was your risk decision made calmly, before money was on the line. Moving it replaces that decision with one made under stress, by the worst version of you."}]
-},
-{
- id:"m4",title:"Reading Price",mins:3,
- outcomes:["Describe the market's structure in one sentence","Mark the levels that matter before the session opens","Use three indicators and ignore the rest"],
- topics:["Candles, and choosing a timeframe you can actually trade","Market structure: trend, range, higher highs and lower lows","Support, resistance and prior-session levels","EMA for regime, ATR for volatility, VWAP for intraday reference"],
- videos:[{yt:"i1N2MYX3uE4",label:"Candlesticks Explained In The EASIEST Way Possible"},{yt:"vNzsmCyWV_g",label:"Master Support & Resistance Trading Strategy"}],
- explainer:"<p>Before any indicator, answer one question: what is price actually doing? There are only three answers. Trending up, trending down, or ranging.</p><p>An uptrend is a sequence of <strong>higher highs and higher lows</strong>. Each pullback stops above the last one, which means buyers keep showing up earlier than before. A downtrend is the mirror. A range is neither — price rotating between two levels while nobody's in control.</p><figure><svg viewBox='0 0 400 170' xmlns='http://www.w3.org/2000/svg' role='img' aria-label='Chart showing higher highs and higher lows, then a break of structure'><line x1='0' y1='78' x2='400' y2='78' stroke='var(--rule)' stroke-dasharray='3 4'/><polyline points='10,145 70,82 110,108 172,44 212,74 252,58 300,112 340,128 385,120' fill='none' stroke='var(--gold)' stroke-width='2' stroke-linejoin='round'/><g font-family='JetBrains Mono, monospace' font-size='9' fill='var(--mute)'><text x='60' y='72'>HH</text><text x='104' y='124'>HL</text><text x='163' y='34'>HH</text><text x='206' y='90'>HL</text><text x='244' y='48'>LH</text><text x='286' y='134'>break</text><text x='310' y='72' fill='var(--brick)'>structure fails</text></g></svg><figcaption>Higher highs, higher lows — until the higher low breaks.</figcaption></figure><p>That last part is the useful bit. When price takes out the most recent higher low, the sequence is broken and your reason for being long has expired — no matter what any indicator says.</p><p>Mark your levels before the session opens, not during it: the prior session's high and low, the overnight range, and the day's open. These matter for one unglamorous reason — everyone else can see them too, so orders and reactions cluster there. There's nothing magic about the price itself, only about the shared attention on it.</p><p>Three indicators is the whole toolkit. <strong>EMA</strong> (say 50 and 200) for regime — are you trading with the larger flow or against it. <strong>ATR</strong> for volatility, which turns an arbitrary stop in ticks into one sized to what today's market is actually doing. <strong>VWAP</strong> as an intraday fair-value reference. Everything past that is another opinion about data you already have.</p>",
- quiz:[
-  {q:"An uptrend, structurally, is…",
-   a:["Price above a moving average","A sequence of higher highs and higher lows","Three green candles in a row","Rising volume"],c:1,
-   why:"Structure is what price is doing; indicators are a lagging opinion about it. When the higher low fails, the trend is in question — regardless of what your EMA says."},
-  {q:"ATR tells you…",
-   a:["Which direction price is heading","How far price typically travels in a period","Whether the market is overbought","Where institutions are positioned"],c:1,
-   why:"ATR is a volatility measure with no directional content. Its real use is stop placement: a stop set in ticks is arbitrary, a stop set in ATR adapts to the day."},
-  {q:"Why mark the prior session's high and low?",
-   a:["They predict tomorrow's direction","Other traders watch them, so resting orders and reactions cluster there","They're required for prop firm compliance","They reset the daily ATR"],c:1,
-   why:"Levels matter because they're visible to everyone. That's it — no magic, just shared attention creating real order flow at a known price."}]
-},
-{
- id:"m5",title:"Building An Edge",mins:4,
- outcomes:["Compute expectancy and know whether a strategy is worth trading","Write your entry, stop and target as rules someone else could follow","Backtest without quietly cheating"],
- topics:["Expectancy: (win% × avg win) − (loss% × avg loss)","The three decisions — trigger, stop, target","Sample size, curve fitting and hindsight bias","The journal: what to log, and the weekly review"],
- videos:[{yt:"zwvtv0gBSdc",label:"Optional — Fair Value Gaps: one example of an entry trigger, not a requirement"}],
- explainer:"<p>Win rate is the most quoted and least useful number in trading. A 90% win rate can bankrupt you and a 35% win rate can compound for years. The number that settles it is <strong>expectancy</strong> — what one trade is worth on average, once wins and losses are weighed together.</p><div class='calc'>Expectancy = (win% × avg win) − (loss% × avg loss)</div><p>Express the wins and losses in R and the answer comes out in R too:</p><div class='calc'><span class='r'>Win rate</span> 55%<br><span class='r'>Average win</span> 1.5R<br><span class='r'>Average loss</span> 1R<br><br>(0.55 × 1.5) − (0.45 × 1)<br>= 0.825 − 0.45 = <b>+0.375R</b></div><p>Every trade is worth about 37% of whatever you risked. Risk $50 a trade, take 200 trades a year, and the math points at roughly $3,750 — before commissions, and only if you actually follow the rules every time.</p><p>Run it on two very different traders and the point lands:</p><div class='calc'><span class='r'>A —</span> 70% wins at 0.5R → (0.70 × 0.5) − (0.30 × 1) = <b>+0.05R</b><br><span class='r'>B —</span> 40% wins at 3R &nbsp;&nbsp;→ (0.40 × 3) − (0.60 × 1) = <b>+0.60R</b></div><p>Trader A wins almost every day and is barely above water. Trader B loses six times out of ten and makes twelve times as much per trade. Losing often is not the same as losing.</p><p>Two ways people fool themselves. <strong>Sample size:</strong> a 78% win rate over fourteen trades is noise. You want fifty at minimum, a hundred before you trust it, and you want the losing stretches in the sample so you've seen the drawdown before it's real money. <strong>Curve fitting:</strong> if you tweak the rules after seeing which trades lost and re-run the test, you've built something that explains the past perfectly and knows nothing about tomorrow. Rules get written before the test, not tuned during it.</p><p>Then journal every trade — setup, entry, stop, exit, R result, and what you were thinking. Recalculate expectancy monthly. A number that's drifting down is telling you something long before your account balance does.</p>",
- quiz:[
-  {q:"You win 55% of trades. Winners average 1.5R, losers average 1R. Expectancy per trade?",
-   a:["−0.10R","+0.375R","+0.55R","+1.5R"],c:1,
-   why:"(0.55 × 1.5) − (0.45 × 1) = 0.825 − 0.45 = +0.375R. Positive, so it's tradeable — but note that a 45% loss rate still means five losses in a row will happen and mean nothing."},
-  {q:"Your backtest shows a 78% win rate over 14 trades. What's the problem?",
-   a:["The win rate is too high to be real","Fourteen trades is noise, not evidence","Backtests always overstate results","Nothing — that's a strong edge"],c:1,
-   why:"At that sample size, luck dominates. You want enough trades that a hot streak can't carry the result — and you want the losing stretches in your sample, so you've seen the drawdown before it's real money."},
-  {q:"Which of these makes a backtest dishonest?",
-   a:["Testing on more than one instrument","Adjusting the rules after seeing which trades lost, then re-running","Including commissions","Testing across different sessions"],c:1,
-   why:"That's curve fitting: you've built a strategy that perfectly explains the past and knows nothing about the future. Rules get set before the test, not tuned during it."}]
-},
-{
- id:"m6",title:"Execution & Going Live",mins:10,
- outcomes:["Run a pre-market routine and trade from a written plan","Name the mistake you're making while you're making it","Know exactly what has to be true before you size up"],
- topics:["Pre-market routine and the trade-plan checklist","The four killers: revenge trading, overtrading, moving stops, size creep","Sim → one micro → scale, with criteria for each step","Section 1256 and the 60/40 tax treatment"],
- videos:[{yt:"Be2GCdGSZg0",label:"9 Years of Trading Psychology in 9 Minutes"}],
- quiz:[
-  {q:"You take a full stop-out, and immediately re-enter to make it back. This is…",
-   a:["Aggressive but valid","Revenge trading — the loss is now driving the decisions","Correct if the setup is still valid","Standard scalping practice"],c:1,
-   why:"The tell isn't the re-entry, it's the motive. If the trade exists because you want the money back rather than because the plan produced a signal, you've handed the account to your emotions."},
-  {q:"Under Section 1256, gains on futures are generally treated as…",
-   a:["100% short-term","60% long-term, 40% short-term regardless of holding period","Ordinary income","Tax-deferred until withdrawal"],c:1,
-   why:"The 60/40 split applies even to a trade held two minutes, which is a genuine structural advantage over equities. Positions are also marked to market at year end. Confirm the details with a tax professional before you file."},
-  {q:"When is it time to increase size?",
-   a:["After a big winning day","When the account can absorb it and you've hit your consistency criteria","When you feel confident in the setup","After recovering a drawdown"],c:1,
-   why:"Size increases are a math decision made in advance — a target number of trades, a positive expectancy, a drawdown you survived without breaking rules. Sizing up after a win is how a good week becomes a bad month."}]
-}];
+ {
+  "id": "m1",
+  "title": "Contract Mechanics",
+  "mins": 5,
+  "outcomes": [
+   "Read a contract spec sheet and know what one tick is worth",
+   "Turn a price move into dollars before you place the trade",
+   "Say why a micro is the only sane place to start"
+  ],
+  "topics": [
+   "What a futures contract obligates you to do",
+   "Full-size, mini, micro: same market, different bet size",
+   "Tick size, tick value, point value",
+   "Contract months, expiration and rollover"
+  ],
+  "videos": [
+   {
+    "yt": "Dh5KFZqEHqU",
+    "label": "Futures Trading Explained For Beginners in 5 Minutes"
+   }
+  ],
+  "quiz": [
+   {
+    "q": "A tick is…",
+    "a": [
+     "One dollar of price movement",
+     "The smallest price move a given contract can make",
+     "One full point on the chart",
+     "The fee your broker charges per trade"
+    ],
+    "c": 1,
+    "why": "And critically, each contract has its own tick size and its own dollar value per tick. Never assume the contract you're trading behaves like the last one — look up the spec before your first order."
+   },
+   {
+    "q": "Why do micro contracts exist for a beginner?",
+    "a": [
+     "They expire less often",
+     "They're a fraction of the standard contract, so you can risk $20–30 on a trade",
+     "They have no margin requirement",
+     "They're exempt from the tick system"
+    ],
+    "c": 1,
+    "why": "A micro is a scaled-down version of the standard contract. It's the difference between learning on an account you can afford to lose and learning on one you can't."
+   },
+   {
+    "q": "Under U.S. tax treatment, futures profits are generally split…",
+    "a": [
+     "100% short-term",
+     "60% long-term, 40% short-term",
+     "Taxed only on withdrawal",
+     "Same as stock trades"
+    ],
+    "c": 1,
+    "why": "The 60/40 split applies regardless of how long you held the trade, which is a real structural advantage over equities. Confirm the details with a tax professional before you file."
+   }
+  ]
+ },
+ {
+  "id": "m2",
+  "title": "Account & Execution",
+  "mins": 3,
+  "outcomes": [
+   "Explain what margin actually is and what it isn't",
+   "Place, bracket and flatten a position without hesitating",
+   "Choose between a personal account and a prop evaluation with clear eyes"
+  ],
+  "topics": [
+   "Day-trade margin vs initial and maintenance margin",
+   "Order types: market, limit, stop, stop-limit, bracket/OCO",
+   "Sessions: Globex open, Asia, London, New York",
+   "Prop firm evaluations: rules, drawdown types, what you're buying"
+  ],
+  "videos": [
+   {
+    "yt": "Phkue5TmwRc",
+    "label": "Prop Firm vs Personal Account: What Every Futures Trader Needs to Know"
+   },
+   {
+    "yt": "rJj4ZbnzEGs",
+    "label": "How To Use TradingView For Beginners — platform tour"
+   }
+  ],
+  "explainer": "<p>Margin is not a cost and not a down payment. It's a good-faith deposit the exchange holds while your position is open, and it's the reason a few hundred dollars can control a contract worth tens of thousands. That ratio is leverage, and it works identically in both directions.</p><p>There are two numbers. <strong>Initial margin</strong> is set by the exchange and applies if you hold past the session close. <strong>Day-trade margin</strong> is set by your broker, is often a fraction of the initial figure, and evaporates at a specific clock time — miss it and you either owe the full amount or get auto-liquidated at whatever price the market offers. Find that exact time in your broker's docs before your first trade.</p><p>Four order types cover almost everything. A <strong>market</strong> order fills now at whatever price exists. A <strong>limit</strong> order fills at your price or better, or not at all. A <strong>stop</strong> becomes a market order once price touches your level — so it fills, but not necessarily where you wanted. A <strong>stop-limit</strong> gives you price control and accepts the risk of no fill.</p><p>Wrap every entry in a <strong>bracket</strong> — a target and a stop submitted together as an OCO pair. When one fills the other cancels itself. Without it, a filled target can leave an orphaned stop sitting in the market, ready to open a fresh position in the opposite direction while you're away from the screen.</p><p>If you're using a prop evaluation, the rule that ends most accounts is the <strong>trailing drawdown</strong>. It follows your highest account peak, and at many firms that peak includes open, unrealised profit. Run $600 up and give it back, and your loss limit has already ratcheted up behind you. Read the exact wording before you pay the fee.</p>",
+  "quiz": [
+   {
+    "q": "A prop firm advertises a $50,000 account. What are you actually managing?",
+    "a": [
+     "The full $50,000",
+     "The drawdown — often around $1,500–$2,000",
+     "Half the account",
+     "Whatever you deposit"
+    ],
+    "c": 1,
+    "why": "They never let you lose the headline number. Your real limit is the drawdown, which puts you in roughly the same position as someone trading a $1,500 personal account — without the fees or the rules."
+   },
+   {
+    "q": "A consistency rule means…",
+    "a": [
+     "You must trade every day",
+     "You can be failed for making too much of your profit on a single day",
+     "Your position size must never change",
+     "You must hit the target within a set number of days"
+    ],
+    "c": 1,
+    "why": "It catches people out precisely when things go well — hit the whole profit target in one strong session and the firm can fail you for it. Read the rule before you pay the fee, not after."
+   },
+   {
+    "q": "You pass the evaluation and pay the activation fee. You are now…",
+    "a": [
+     "Trading real firm capital",
+     "Usually still in a simulated environment with payouts modelled internally",
+     "Automatically eligible for a live account",
+     "Free of the drawdown limit"
+    ],
+    "c": 1,
+    "why": "Most firms keep you on a demo-based system after funding. Real capital typically comes only after months of consistent profitability and multiple clean payouts — and any rule break sends you back to the start, paying again."
+   }
+  ]
+ },
+ {
+  "id": "m3",
+  "title": "Risk First",
+  "mins": 4,
+  "risk": true,
+  "outcomes": [
+   "Size a position from your stop instead of your hope",
+   "Express every trade as a multiple of R",
+   "Know your daily stop and honour it without negotiating"
+  ],
+  "topics": [
+   "Risk per trade: the fixed-percentage method",
+   "Position sizing math, worked twice",
+   "The R concept — one unit of risk, every trade",
+   "Daily loss limit and the walk-away rule"
+  ],
+  "videos": [
+   {
+    "yt": "O0SNjO9CyQ8",
+    "label": "How to Calculate Risk in Futures (Simplified in 5 Minutes)"
+   }
+  ],
+  "explainer": "<p>Position size is not a feeling. It's arithmetic, and it runs in one direction only: the chart tells you where the stop goes, the stop tells you how many contracts you can hold. Reverse that order — pick a size first, then place a stop where it feels comfortable — and you've quietly decided to lose more than you planned.</p><p>Three inputs. What you'll risk on this trade, how far the stop sits in ticks, and what a tick is worth.</p><div class='calc'><span class='r'>Account</span> $5,000<br><span class='r'>Risk per trade</span> 1% = <b>$50</b><br><span class='r'>Stop distance</span> 25 ticks<br><span class='r'>Tick value</span> $1.00<br><br><span class='r'>Risk per contract</span> 25 × $1.00 = <b>$25</b><br><span class='r'>Contracts</span> $50 ÷ $25 = <b>2</b></div><p>Always round down. A fractional answer of 2.8 means two contracts, not three.</p><p>Now stop thinking in dollars. That $50 is <strong>1R</strong> — one unit of risk. A trade that makes $150 is a 3R winner whether you were trading one micro or ten. Speaking in R lets you compare trades across account sizes, spot which setups actually pay, and see instantly that a 3R win erases three losses.</p><p>Set a daily stop as well as a per-trade stop. Two or three losses in a row is a normal Tuesday, not a signal to trade bigger. When the daily number hits, the platform closes — that decision is made now, in advance, not in the moment when you're down and reasoning badly.</p><p>The reason all of this matters is that losses and gains are not symmetric:</p><div class='calc'><span class='r'>Down 10%</span> → need <b>+11%</b> to recover<br><span class='r'>Down 25%</span> → need <b>+33%</b><br><span class='r'>Down 50%</span> → need <b>+100%</b><br><span class='r'>Down 75%</span> → need <b>+300%</b></div><p>Small, consistent risk isn't timidity. It's the only thing that keeps the recovery math survivable.</p>",
+  "rules": [
+   "Never move a stop away from price.",
+   "Never add to a loser.",
+   "When the daily stop hits, the platform closes."
+  ],
+  "quiz": [
+   {
+    "q": "NQ moves $20 per point. Your stop is 6 points away and you'll risk $300. How many contracts?",
+    "a": [
+     "1",
+     "2",
+     "3",
+     "5"
+    ],
+    "c": 1,
+    "why": "6 × $20 = $120 per contract. $300 ÷ $120 = 2.5, and you always round down — so 2. Watch this moment in the video closely: he lands on the same math and then takes 3 contracts anyway because he 'believed in the trade,' which is $360 on a $300 limit. That's the exact habit this module exists to prevent."
+   },
+   {
+    "q": "The stop goes on the chart first, then the size is calculated. Why not the other way round?",
+    "a": [
+     "Brokers require it in that order",
+     "Sizing first means the stop gets placed where it feels comfortable rather than where the trade is invalid",
+     "It reduces commissions",
+     "It makes the R multiple bigger"
+    ],
+    "c": 1,
+    "why": "Size-first quietly converts a risk decision into a comfort decision. The chart tells you where you're wrong; that distance tells you how many contracts you can carry."
+   },
+   {
+    "q": "You're down 50% on the account. What gain gets you back to even?",
+    "a": [
+     "50%",
+     "75%",
+     "100%",
+     "150%"
+    ],
+    "c": 2,
+    "why": "$10,000 down 50% is $5,000, and $5,000 must double to return. Losses compound against you harder than gains compound for you — which is the whole argument for small, fixed risk per trade."
+   }
+  ]
+ },
+ {
+  "id": "m4",
+  "title": "Reading Price",
+  "mins": 3,
+  "outcomes": [
+   "Describe the market's structure in one sentence",
+   "Mark the levels that matter before the session opens",
+   "Use three indicators and ignore the rest"
+  ],
+  "topics": [
+   "Candles, and choosing a timeframe you can actually trade",
+   "Market structure: trend, range, higher highs and lower lows",
+   "Support, resistance and prior-session levels",
+   "EMA for regime, ATR for volatility, VWAP for intraday reference"
+  ],
+  "videos": [
+   {
+    "yt": "i1N2MYX3uE4",
+    "label": "Candlesticks Explained In The EASIEST Way Possible"
+   },
+   {
+    "yt": "vNzsmCyWV_g",
+    "label": "Master Support & Resistance Trading Strategy"
+   }
+  ],
+  "explainer": "<p>Before any indicator, answer one question: what is price actually doing? There are only three answers. Trending up, trending down, or ranging.</p><p>An uptrend is a sequence of <strong>higher highs and higher lows</strong>. Each pullback stops above the last one, which means buyers keep showing up earlier than before. A downtrend is the mirror. A range is neither — price rotating between two levels while nobody's in control.</p><figure><svg viewBox='0 0 400 170' xmlns='http://www.w3.org/2000/svg' role='img' aria-label='Chart showing higher highs and higher lows, then a break of structure'><line x1='0' y1='78' x2='400' y2='78' stroke='var(--rule)' stroke-dasharray='3 4'/><polyline points='10,145 70,82 110,108 172,44 212,74 252,58 300,112 340,128 385,120' fill='none' stroke='var(--gold)' stroke-width='2' stroke-linejoin='round'/><g font-family='JetBrains Mono, monospace' font-size='9' fill='var(--mute)'><text x='60' y='72'>HH</text><text x='104' y='124'>HL</text><text x='163' y='34'>HH</text><text x='206' y='90'>HL</text><text x='244' y='48'>LH</text><text x='286' y='134'>break</text><text x='310' y='72' fill='var(--brick)'>structure fails</text></g></svg><figcaption>Higher highs, higher lows — until the higher low breaks.</figcaption></figure><p>That last part is the useful bit. When price takes out the most recent higher low, the sequence is broken and your reason for being long has expired — no matter what any indicator says.</p><p>Mark your levels before the session opens, not during it: the prior session's high and low, the overnight range, and the day's open. These matter for one unglamorous reason — everyone else can see them too, so orders and reactions cluster there. There's nothing magic about the price itself, only about the shared attention on it.</p><p>Three indicators is the whole toolkit. <strong>EMA</strong> (say 50 and 200) for regime — are you trading with the larger flow or against it. <strong>ATR</strong> for volatility, which turns an arbitrary stop in ticks into one sized to what today's market is actually doing. <strong>VWAP</strong> as an intraday fair-value reference. Everything past that is another opinion about data you already have.</p>",
+  "quiz": [
+   {
+    "q": "On a red candlestick, the top of the body is…",
+    "a": [
+     "The highest price reached",
+     "Where price opened",
+     "Where price closed",
+     "The midpoint of the range"
+    ],
+    "c": 1,
+    "why": "Red means it closed lower than it opened, so the top of the body is the open and the bottom is the close. Green is the reverse. The wicks, either way, show the extremes price touched during that period."
+   },
+   {
+    "q": "A liquidity run (or stop hunt) is when…",
+    "a": [
+     "Volume spikes at the open",
+     "Price pushes through an obvious level, triggers the stops sitting there, then reverses back",
+     "A level holds for the third time",
+     "The market gaps overnight"
+    ],
+    "c": 1,
+    "why": "Obvious levels are obvious to everyone, which is exactly what makes the stops behind them worth taking. It's the reason a level being widely watched is a double-edged thing rather than a guarantee."
+   },
+   {
+    "q": "An uptrend, structurally, is…",
+    "a": [
+     "Price above a moving average",
+     "A sequence of higher highs and higher lows",
+     "Three green candles in a row",
+     "Rising volume"
+    ],
+    "c": 1,
+    "why": "Structure is what price is doing; indicators are a lagging opinion about it. When the most recent higher low breaks, your reason for being long has expired regardless of what any indicator says."
+   }
+  ]
+ },
+ {
+  "id": "m5",
+  "title": "Building An Edge",
+  "mins": 4,
+  "outcomes": [
+   "Compute expectancy and know whether a strategy is worth trading",
+   "Write your entry, stop and target as rules someone else could follow",
+   "Backtest without quietly cheating"
+  ],
+  "topics": [
+   "Expectancy: (win% × avg win) − (loss% × avg loss)",
+   "The three decisions — trigger, stop, target",
+   "Sample size, curve fitting and hindsight bias",
+   "The journal: what to log, and the weekly review"
+  ],
+  "videos": [
+   {
+    "yt": "zwvtv0gBSdc",
+    "label": "Optional — Fair Value Gaps: one example of an entry trigger, not a requirement"
+   }
+  ],
+  "explainer": "<p>Win rate is the most quoted and least useful number in trading. A 90% win rate can bankrupt you and a 35% win rate can compound for years. The number that settles it is <strong>expectancy</strong> — what one trade is worth on average, once wins and losses are weighed together.</p><div class='calc'>Expectancy = (win% × avg win) − (loss% × avg loss)</div><p>Express the wins and losses in R and the answer comes out in R too:</p><div class='calc'><span class='r'>Win rate</span> 55%<br><span class='r'>Average win</span> 1.5R<br><span class='r'>Average loss</span> 1R<br><br>(0.55 × 1.5) − (0.45 × 1)<br>= 0.825 − 0.45 = <b>+0.375R</b></div><p>Every trade is worth about 37% of whatever you risked. Risk $50 a trade, take 200 trades a year, and the math points at roughly $3,750 — before commissions, and only if you actually follow the rules every time.</p><p>Run it on two very different traders and the point lands:</p><div class='calc'><span class='r'>A —</span> 70% wins at 0.5R → (0.70 × 0.5) − (0.30 × 1) = <b>+0.05R</b><br><span class='r'>B —</span> 40% wins at 3R &nbsp;&nbsp;→ (0.40 × 3) − (0.60 × 1) = <b>+0.60R</b></div><p>Trader A wins almost every day and is barely above water. Trader B loses six times out of ten and makes twelve times as much per trade. Losing often is not the same as losing.</p><p>Two ways people fool themselves. <strong>Sample size:</strong> a 78% win rate over fourteen trades is noise. You want fifty at minimum, a hundred before you trust it, and you want the losing stretches in the sample so you've seen the drawdown before it's real money. <strong>Curve fitting:</strong> if you tweak the rules after seeing which trades lost and re-run the test, you've built something that explains the past perfectly and knows nothing about tomorrow. Rules get written before the test, not tuned during it.</p><p>Then journal every trade — setup, entry, stop, exit, R result, and what you were thinking. Recalculate expectancy monthly. A number that's drifting down is telling you something long before your account balance does.</p>",
+  "quiz": [
+   {
+    "q": "You win 55% of trades. Winners average 1.5R, losers average 1R. Expectancy per trade?",
+    "a": [
+     "−0.10R",
+     "+0.375R",
+     "+0.55R",
+     "+1.5R"
+    ],
+    "c": 1,
+    "why": "(0.55 × 1.5) − (0.45 × 1) = 0.825 − 0.45 = +0.375R. Positive, so it's worth trading — though a 45% loss rate still means five losses in a row will happen and mean nothing."
+   },
+   {
+    "q": "Which trader has the stronger edge?",
+    "a": [
+     "70% win rate at 0.5R average win",
+     "40% win rate at 3R average win",
+     "They're identical",
+     "Impossible to say without the account size"
+    ],
+    "c": 1,
+    "why": "(0.70 × 0.5) − (0.30 × 1) = +0.05R, versus (0.40 × 3) − (0.60 × 1) = +0.60R. The second trader loses six times out of ten and earns twelve times as much per trade. Losing often is not the same as losing."
+   },
+   {
+    "q": "A bullish fair value gap is confirmed when…",
+    "a": [
+     "Two candles close in the same direction",
+     "The first candle's high does not overlap the third candle's low",
+     "Price closes above a moving average",
+     "Volume doubles on the breakout"
+    ],
+    "c": 1,
+    "why": "It's a three-candle imbalance, and price often retraces to fill some or all of it before continuing. Treat it as one optional entry trigger among many — plenty of profitable traders have never used one, and no trigger substitutes for the sizing and expectancy work in this module."
+   }
+  ]
+ },
+ {
+  "id": "m6",
+  "title": "Execution & Going Live",
+  "mins": 10,
+  "outcomes": [
+   "Run a pre-market routine and trade from a written plan",
+   "Name the mistake you're making while you're making it",
+   "Know exactly what has to be true before you size up"
+  ],
+  "topics": [
+   "Pre-market routine and the trade-plan checklist",
+   "The four killers: revenge trading, overtrading, moving stops, size creep",
+   "Sim → one micro → scale, with criteria for each step",
+   "Section 1256 and the 60/40 tax treatment"
+  ],
+  "videos": [
+   {
+    "yt": "Be2GCdGSZg0",
+    "label": "9 Years of Trading Psychology in 9 Minutes"
+   }
+  ],
+  "quiz": [
+   {
+    "q": "According to the video, setting a daily dollar goal tends to lead to…",
+    "a": [
+     "Faster account growth",
+     "Forcing trades that aren't there, and revenge trading when a trade loses",
+     "Better discipline",
+     "More accurate entries"
+    ],
+    "c": 1,
+    "why": "Expectations create pressure to produce, and pressure produces trades the plan never called for. Some days have zero valid setups, and taking none of them is the correct outcome."
+   },
+   {
+    "q": "He argues a trader's number one job is…",
+    "a": [
+     "To make money",
+     "To not lose money",
+     "To find the best setups",
+     "To trade every session"
+    ],
+    "c": 1,
+    "why": "He describes giving back close to $90,000 in 2023 by taking bigger risks to chase a milestone. His framing: we're risk managers first, and the profit follows from keeping losses small."
+   },
+   {
+    "q": "You miss a setup you'd been waiting for. The right response is…",
+    "a": [
+     "Chase the entry before it runs",
+     "Size up on the next one to make up ground",
+     "Let it go — another setup is coming",
+     "Switch to a lower timeframe to find an entry"
+    ],
+    "c": 2,
+    "why": "His line is that trades are like buses. FOMO turns a missed opportunity into a real loss, and the market will still be there tomorrow — you won't be, if you blow the account chasing."
+   }
+  ]
+ }
+];
 
 /* ---------- render ---------- */
 const modsEl=document.getElementById('mods'),railList=document.getElementById('railList'),stripBar=document.getElementById('stripBar');
