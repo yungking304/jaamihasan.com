@@ -145,6 +145,35 @@ h3.sub:first-child{margin-top:8px}
 .score{font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:var(--mute);margin-left:14px}
 .score.pass{color:var(--gold)}
 
+#rail .who{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--mute);text-transform:uppercase;margin-bottom:12px;line-height:1.7}
+#rail .who span{color:var(--bone);text-transform:none;letter-spacing:.02em;font-size:11px}
+
+#rail .sync{font-family:var(--mono);font-size:9px;letter-spacing:.08em;color:var(--mute);line-height:1.6;margin-bottom:12px;min-height:1px}
+#rail .sync.bad{color:var(--brick)}
+
+#certWrap{border-top:1px solid var(--rule);padding:54px 0 0}
+.cert{border:1px solid var(--gold);padding:46px 30px;text-align:center}
+.cert .kick{font-family:var(--mono);font-size:10px;letter-spacing:.28em;color:var(--gold);text-transform:uppercase}
+.cert .awarded{font-size:15px;color:var(--mute);max-width:46ch;margin:0 auto}
+.cert .kick+.awarded{margin-top:30px}
+.cert .name{font-family:var(--display);font-weight:800;font-size:clamp(28px,7vw,50px);line-height:1.1;letter-spacing:-.02em;text-transform:uppercase;margin:12px auto 18px;padding-bottom:16px;border-bottom:1px solid var(--rule);max-width:22ch}
+.cert .sig{display:flex;flex-wrap:wrap;justify-content:center;gap:14px 42px;margin-top:34px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--bone)}
+.cert .sig .lab{display:block;font-size:9px;letter-spacing:.2em;color:var(--mute);text-transform:uppercase;margin-bottom:5px}
+.certacts{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.certacts a.check{text-decoration:none;display:inline-block}
+.fineprint{font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--mute);margin-top:16px;line-height:1.7}
+
+@media print{
+  body{padding:0;background:#fff;color:#111}
+  #rail,#strip,header.top,#mods,footer,.certacts,#gate{display:none!important}
+  #certWrap{border:0;padding:0}
+  .cert{border:2px solid #8a6d1f;padding:70px 40px}
+  .cert .kick,.cert .name{color:#8a6d1f}
+  .cert .awarded,.cert .sig .lab{color:#555}
+  .cert .sig,.fineprint{color:#111}
+  .cert .name{border-bottom-color:#ccc}
+}
+
 footer{padding:56px 0 70px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--mute);text-transform:uppercase;display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between}
 footer a{text-decoration:none}
 footer a:hover{color:var(--bone)}
@@ -167,6 +196,9 @@ footer a:hover{color:var(--bone)}
   <p class="head">Complete</p>
   <p class="pct"><span id="railDone">0</span><span style="font-size:20px;color:var(--mute)">/6</span></p>
   <ol id="railList"></ol>
+  <p class="who">Signed in<br><span id="who">—</span></p>
+  <p class="sync" id="sync"></p>
+  <button class="reset" id="signout">Sign out</button>
   <button class="reset" id="reset">Reset progress</button>
 </nav>
 
@@ -193,6 +225,25 @@ footer a:hover{color:var(--bone)}
 
   <main id="mods"></main>
 
+  <section id="certWrap" hidden>
+    <div class="cert">
+      <p class="kick">Certificate of Completion</p>
+      <p class="awarded">This certifies that</p>
+      <p class="name" id="certName"></p>
+      <p class="awarded">has completed all six modules of Futures School — contract mechanics, account and execution, risk, price structure, edge, and execution psychology — including the checkpoint assessment for each.</p>
+      <div class="sig">
+        <div><span class="lab">Completed</span><span id="certDate"></span></div>
+        <div><span class="lab">Certificate no.</span><span id="certSerial"></span></div>
+        <div><span class="lab">Issued by</span>Jaami Hasan</div>
+      </div>
+    </div>
+    <div class="certacts">
+      <button class="check" id="print">Print or save as PDF</button>
+      <a class="check" id="certMail" href="#">Send Jay your result</a>
+    </div>
+    <p class="fineprint">This certificate records course completion only. It is not a financial qualification, licence, or credential of any kind.</p>
+  </section>
+
   <footer>
     <span>© 2026 Jaami Hasan</span>
     <a href="index.html">← Back to site</a>
@@ -207,19 +258,35 @@ const Store=(()=>{const mem={};let ok=true;
          set(k,v){try{ok?localStorage.setItem(k,v):mem[k]=v}catch(e){mem[k]=v}},
          del(k){try{ok?localStorage.removeItem(k):delete mem[k]}catch(e){delete mem[k]}}}})();
 
-/* ---------- GATE: change this, or delete the gate entirely ---------- */
-const PASSCODE="GRID";
+/* ---------- SERVER ----------
+   Paste your Apps Script Web App URL below (it ends in /exec).
+   The roster lives in the Google Sheet, not in this file, so passcodes
+   are never visible in View Source.                                    */
+const API_URL="";
+
+let STUDENT=null, PROGRESS={}, DONE_AT="", SYNCED=true;
 const gate=document.getElementById('gate');
-if(Store.get('fs_open')!=='1'){
-  gate.hidden=false;document.body.style.overflow='hidden';
-  const tryIt=()=>{
-    if(document.getElementById('code').value.trim().toUpperCase()===PASSCODE){
-      Store.set('fs_open','1');gate.remove();document.body.style.overflow='';
-    }else{document.getElementById('err').textContent="Wrong passcode. Ask Jay.";}
-  };
-  document.getElementById('enter').addEventListener('click',tryIt);
-  document.getElementById('code').addEventListener('keydown',e=>{if(e.key==='Enter')tryIt()});
+
+async function api(action,payload){
+  if(!API_URL) throw new Error('API_URL has not been set in this file yet.');
+  const r=await fetch(API_URL,{method:'POST',body:JSON.stringify(Object.assign({action},payload))});
+  const j=await r.json();
+  if(!j.ok) throw new Error(j.error||'The server rejected that request.');
+  return j;
 }
+const ck=n=>'fs_'+STUDENT.id+'_'+n;
+function cacheAll(){
+  Store.set('fs_session',JSON.stringify({id:STUDENT.id,name:STUDENT.name,token:STUDENT.token}));
+  Store.set(ck('progress'),JSON.stringify(PROGRESS));
+  if(DONE_AT)Store.set(ck('done_at'),DONE_AT);
+}
+function flagSync(ok){
+  SYNCED=ok;
+  const el=document.getElementById('sync');
+  el.textContent=ok?'':'Offline — saved on this device only';
+  el.classList.toggle('bad',!ok);
+}
+function openCourse(){ if(gate&&gate.parentNode)gate.remove(); document.body.style.overflow=''; paint(); }
 
 /* ---------- COURSE CONTENT ----------
    Add YouTube IDs to yt:"" — the 11-character string after v= in the URL.
@@ -652,32 +719,102 @@ document.querySelectorAll('.quiz').forEach(quiz=>{
     const s=quiz.querySelector('.score'),pass=right>=2;
     s.textContent=`${right}/3 — ${pass?'passed':'review and retry'}`;
     s.classList.toggle('pass',pass);
-    if(pass){Store.set('fs_'+quiz.dataset.mod,'1');paint()}
+    if(pass){
+      const mod=quiz.dataset.mod;
+      if(right>(PROGRESS[mod]|0))PROGRESS[mod]=right;
+      cacheAll();paint();
+      api('save',{id:STUDENT.id,token:STUDENT.token,mod:mod,score:right})
+        .then(r=>{if(r.done_at){DONE_AT=r.done_at;cacheAll();paint()}flagSync(true)})
+        .catch(()=>flagSync(false));
+    }
   });
 });
 
 /* ---------- progress ---------- */
 function paint(){
+  if(!STUDENT)return;
   let done=0;
   COURSE.forEach(m=>{
-    const ok=Store.get('fs_'+m.id)==='1';if(ok)done++;
+    const ok=(PROGRESS[m.id]|0)>=2;if(ok)done++;
     document.querySelector(`[data-rail="${m.id}"]`).classList.toggle('done',ok);
     document.querySelector(`[data-bar="${m.id}"]`).classList.toggle('on',ok);
     const t=document.querySelector(`[data-tick="${m.id}"]`);
     t.textContent=ok?'complete':`${m.mins} min`;t.classList.toggle('pass',ok);
+    const s=document.querySelector(`.quiz[data-mod="${m.id}"] .score`);
+    if(ok&&s&&!s.textContent){s.textContent=PROGRESS[m.id]+'/3 — passed';s.classList.add('pass')}
   });
   document.getElementById('railDone').textContent=done;
   document.getElementById('stripDone').textContent=done;
+  document.getElementById('who').textContent=STUDENT.name;
+  paintCert(done);
 }
+
+/* ---------- certificate ---------- */
+function serial(dateStr){
+  let h=0;const s=STUDENT.id+dateStr;
+  for(let i=0;i<s.length;i++){h=(h*31+s.charCodeAt(i))>>>0}
+  return 'FS-'+dateStr.replace(/-/g,'')+'-'+h.toString(36).toUpperCase().slice(0,5);
+}
+function paintCert(done){
+  const wrap=document.getElementById('certWrap');
+  if(done<COURSE.length){wrap.hidden=true;return}
+  const when=DONE_AT||new Date().toISOString().slice(0,10);
+  const pretty=new Date(when+'T12:00:00').toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'});
+  document.getElementById('certName').textContent=STUDENT.name;
+  document.getElementById('certDate').textContent=pretty;
+  document.getElementById('certSerial').textContent=serial(when);
+  document.getElementById('certMail').href='mailto:jaamihasan89@gmail.com'
+    +'?subject='+encodeURIComponent('Futures School completed — '+STUDENT.name)
+    +'&body='+encodeURIComponent('Finished all six modules on '+pretty+'.\nCertificate no. '+serial(when));
+  wrap.hidden=false;
+}
+document.getElementById('print').addEventListener('click',()=>window.print());
+document.getElementById('signout').addEventListener('click',()=>{
+  Store.del('fs_session');location.reload();
+});
 document.getElementById('reset').addEventListener('click',()=>{
-  COURSE.forEach(m=>Store.del('fs_'+m.id));
+  if(!confirm('Clear all progress for '+STUDENT.name+'? This cannot be undone.'))return;
+  PROGRESS={};DONE_AT='';cacheAll();Store.del(ck('done_at'));
   document.querySelectorAll('.score').forEach(s=>{s.textContent='';s.classList.remove('pass')});
   document.querySelectorAll('.why').forEach(w=>w.classList.remove('show'));
   document.querySelectorAll('.opt').forEach(o=>o.classList.remove('right','wrong'));
   document.querySelectorAll('input[type=radio]').forEach(r=>r.checked=false);
   paint();
+  api('reset',{id:STUDENT.id,token:STUDENT.token}).then(()=>flagSync(true)).catch(()=>flagSync(false));
 });
-paint();
+
+/* ---------- boot ---------- */
+document.getElementById('enter').addEventListener('click',doLogin);
+document.getElementById('code').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin()});
+
+async function doLogin(){
+  const btn=document.getElementById('enter'),err=document.getElementById('err');
+  const typed=document.getElementById('code').value.trim();
+  if(!typed){err.textContent='Enter your passcode.';return}
+  btn.disabled=true;btn.textContent='Checking…';err.textContent='';
+  try{
+    const res=await api('login',{code:typed});
+    STUDENT={id:res.id,name:res.name,token:res.token};
+    PROGRESS=res.progress||{};DONE_AT=res.done_at||'';
+    cacheAll();flagSync(true);openCourse();
+  }catch(e){
+    err.textContent=/roster|passcode/i.test(e.message)?"That code isn't on the roster. Ask Jay.":"Couldn't reach the server. Check your connection and try again.";
+  }finally{btn.disabled=false;btn.textContent='Enter'}
+}
+
+(async function boot(){
+  const raw=Store.get('fs_session');
+  if(!raw){gate.hidden=false;document.body.style.overflow='hidden';return}
+  try{STUDENT=JSON.parse(raw)}catch(e){Store.del('fs_session');gate.hidden=false;return}
+  try{PROGRESS=JSON.parse(Store.get(ck('progress'))||'{}')}catch(e){PROGRESS={}}
+  DONE_AT=Store.get(ck('done_at'))||'';
+  openCourse();
+  try{
+    const res=await api('resume',{id:STUDENT.id,token:STUDENT.token});
+    PROGRESS=res.progress||{};DONE_AT=res.done_at||'';STUDENT.name=res.name||STUDENT.name;
+    cacheAll();flagSync(true);paint();
+  }catch(e){flagSync(false)}
+})();
 </script>
 </body>
 </html>
