@@ -1,45 +1,423 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trading | Jaami Hasan</title>
-  <link rel="stylesheet" href="assets/css/site.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Futures School | Jaami Hasan</title>
+<meta name="description" content="A short, private course on futures trading. Six modules, start to finish.">
+<meta name="theme-color" content="#0E0E11">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=Newsreader:opsz,wght@6..72,300;6..72,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0E0E11;
+  --raise:#15151A;
+  --rule:#26262E;
+  --bone:#E8E4DC;
+  --mute:#8B8B97;
+  --gold:#C9A227;
+  --brick:#B2503F;
+  --display:'Archivo',system-ui,sans-serif;
+  --body:'Newsreader',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{
+  background:var(--ink);color:var(--bone);
+  font-family:var(--body);font-weight:400;font-size:17px;line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+/* ---------- GATE — deters casual visitors. Not real security. Delete if your
+     existing trading.html already wraps this page in a passcode. ---------- */
+#gate{position:fixed;inset:0;z-index:100;background:var(--ink);display:flex;align-items:center;justify-content:center;padding:24px}
+#gate .box{max-width:340px;width:100%;text-align:center}
+#gate .mark{font-family:var(--mono);font-size:11px;letter-spacing:.22em;color:var(--gold);text-transform:uppercase}
+#gate h1{font-family:var(--display);font-weight:800;font-size:30px;letter-spacing:-.01em;text-transform:uppercase;margin:14px 0 20px}
+#gate input{width:100%;background:var(--raise);border:1px solid var(--rule);color:var(--bone);font-family:var(--mono);font-size:15px;letter-spacing:.2em;text-align:center;padding:13px;border-radius:2px}
+#gate button{width:100%;margin-top:10px;background:var(--gold);color:#0E0E11;border:0;font-family:var(--display);font-weight:800;font-size:13px;letter-spacing:.14em;text-transform:uppercase;padding:13px;border-radius:2px;cursor:pointer}
+#gate .err{font-family:var(--mono);font-size:12px;color:var(--brick);margin-top:12px;min-height:18px}
+
+/* ---------- ladder rail (signature) ---------- */
+#rail{position:fixed;left:0;top:0;bottom:0;width:186px;border-right:1px solid var(--rule);padding:30px 0 30px 26px;display:none;flex-direction:column;z-index:20;background:var(--ink)}
+#rail .head{font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--mute);text-transform:uppercase}
+#rail .pct{font-family:var(--display);font-weight:800;font-size:40px;line-height:1;margin:8px 0 26px;color:var(--gold);font-variant-numeric:tabular-nums}
+#rail ol{list-style:none;flex:1;position:relative}
+#rail ol::before{content:"";position:absolute;left:5px;top:6px;bottom:6px;width:1px;background:var(--rule)}
+#rail li{position:relative;padding:0 0 20px 24px}
+#rail li a{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--mute);text-decoration:none;line-height:1.4}
+#rail li a:hover{color:var(--bone)}
+#rail li::before{content:"";position:absolute;left:0;top:5px;width:11px;height:1px;background:var(--rule)}
+#rail li.done::before{background:var(--gold);height:2px;top:4px}
+#rail li.done a{color:var(--bone)}
+#rail li .n{color:var(--gold);opacity:.5}
+#rail li.done .n{opacity:1}
+#rail .reset{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--mute);background:none;border:0;text-transform:uppercase;cursor:pointer;text-align:left;padding:0}
+#rail .reset:hover{color:var(--brick)}
+@media(min-width:1080px){#rail{display:flex}body{padding-left:186px}}
+
+/* mobile progress strip */
+#strip{position:sticky;top:0;z-index:30;background:rgba(14,14,17,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--rule);padding:11px 22px;display:flex;align-items:center;gap:12px}
+#strip .lbl{font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--mute);text-transform:uppercase;white-space:nowrap}
+#strip .bar{flex:1;display:flex;gap:3px}
+#strip .bar i{flex:1;height:3px;background:var(--rule)}
+#strip .bar i.on{background:var(--gold)}
+@media(min-width:1080px){#strip{display:none}}
+
+/* ---------- layout ---------- */
+.wrap{max-width:760px;margin:0 auto;padding:0 22px}
+header.top{padding:78px 0 54px;border-bottom:1px solid var(--rule)}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.24em;color:var(--gold);text-transform:uppercase}
+header.top h1{font-family:var(--display);font-weight:800;font-size:clamp(38px,9vw,68px);line-height:.95;letter-spacing:-.025em;text-transform:uppercase;margin:18px 0 22px}
+header.top h1 em{font-style:normal;display:block;color:var(--mute)}
+header.top p{max-width:52ch;color:var(--bone);opacity:.86}
+.specs{display:flex;flex-wrap:wrap;gap:0 30px;margin-top:30px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--mute);text-transform:uppercase}
+.specs b{color:var(--bone);font-weight:500}
+
+.notice{border:1px solid var(--rule);border-left:2px solid var(--brick);padding:18px 20px;margin:40px 0 0;font-size:15px;color:var(--mute)}
+.notice strong{color:var(--bone);font-weight:400}
+
+/* ---------- modules ---------- */
+.mod{border-bottom:1px solid var(--rule)}
+.mod>summary{list-style:none;cursor:pointer;padding:30px 0;display:grid;grid-template-columns:auto 1fr auto;gap:0 18px;align-items:baseline}
+.mod>summary::-webkit-details-marker{display:none}
+.mod>summary:hover .ttl{color:var(--gold)}
+.num{font-family:var(--mono);font-size:12px;color:var(--gold);letter-spacing:.1em}
+.ttl{font-family:var(--display);font-weight:800;font-size:clamp(21px,4.6vw,30px);line-height:1.12;letter-spacing:-.01em;text-transform:uppercase;transition:color .18s}
+.meta{grid-column:2;font-family:var(--mono);font-size:11px;color:var(--mute);letter-spacing:.08em;margin-top:9px}
+.tick{font-family:var(--mono);font-size:11px;color:var(--mute);letter-spacing:.1em;white-space:nowrap;align-self:center}
+.mod[open] .tick::after{content:" —"}
+.mod .tick.pass{color:var(--gold)}
+.body{padding:4px 0 46px;grid-column:2}
+@media(min-width:620px){.body{padding-left:44px}}
+
+h3.sub{font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--mute);text-transform:uppercase;margin:34px 0 14px;font-weight:500}
+h3.sub:first-child{margin-top:8px}
+.outcomes{list-style:none}
+.outcomes li{padding-left:20px;position:relative;margin-bottom:7px;color:var(--bone);opacity:.9}
+.outcomes li::before{content:"→";position:absolute;left:0;color:var(--gold);font-family:var(--mono);font-size:13px}
+.topics{font-size:16px;color:var(--mute);border-left:1px solid var(--rule);padding-left:18px}
+.topics span{display:block;margin-bottom:5px}
+.read p{margin-bottom:14px}
+.read p:last-child{margin-bottom:0}
+.read strong{font-weight:400;color:var(--gold)}
+.calc{font-family:var(--mono);font-size:13px;line-height:1.9;color:var(--bone);background:var(--raise);border-left:1px solid var(--gold);padding:14px 16px;margin:16px 0;overflow-x:auto}
+.calc b{color:var(--gold);font-weight:400}
+.calc .r{color:var(--mute)}
+.read figure{margin:20px 0}
+.read figcaption{font-family:var(--mono);font-size:11px;color:var(--mute);letter-spacing:.06em;margin-top:8px}
+.read svg{width:100%;height:auto;display:block}
+.rules{border:1px solid var(--brick);padding:18px 20px;margin-top:16px}
+.rules p{font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:var(--brick);text-transform:uppercase;margin-bottom:10px}
+.rules li{list-style:none;font-size:16px;margin-bottom:4px}
+
+/* video slots */
+.slot{margin-bottom:14px}
+.slot .cap{font-family:var(--mono);font-size:11px;color:var(--mute);letter-spacing:.06em;margin-bottom:7px}
+.slot .cap b{color:var(--gold);font-weight:400}
+.frame{position:relative;padding-top:56.25%;background:var(--raise);border:1px dashed var(--rule)}
+.frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.frame.filled{border-style:solid}
+.empty{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-family:var(--mono);font-size:11px;color:var(--mute);letter-spacing:.08em;text-align:center;padding:16px}
+.empty code{color:var(--gold);font-size:10px}
+
+/* quiz */
+.quiz{margin-top:34px;border:1px solid var(--rule);padding:24px 20px}
+.q{margin-bottom:26px}
+.q:last-of-type{margin-bottom:18px}
+.q p.ask{font-size:16px;margin-bottom:12px}
+.q p.ask span{font-family:var(--mono);font-size:11px;color:var(--gold);margin-right:8px}
+.opt{display:block;position:relative;padding:9px 12px 9px 34px;border:1px solid transparent;cursor:pointer;font-size:15px;color:var(--mute)}
+.opt:hover{color:var(--bone)}
+.opt input{position:absolute;left:12px;top:14px;accent-color:var(--gold);margin:0}
+.opt.right{border-color:var(--gold);color:var(--bone)}
+.opt.wrong{border-color:var(--brick);color:var(--bone)}
+.why{display:none;font-size:15px;color:var(--mute);border-left:1px solid var(--gold);padding:2px 0 2px 14px;margin-top:10px}
+.why.show{display:block}
+.check{font-family:var(--display);font-weight:800;font-size:12px;letter-spacing:.14em;text-transform:uppercase;background:none;color:var(--bone);border:1px solid var(--rule);padding:12px 22px;cursor:pointer}
+.check:hover{border-color:var(--gold);color:var(--gold)}
+.score{font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:var(--mute);margin-left:14px}
+.score.pass{color:var(--gold)}
+
+footer{padding:56px 0 70px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--mute);text-transform:uppercase;display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between}
+footer a{text-decoration:none}
+footer a:hover{color:var(--bone)}
+</style>
 </head>
 <body>
-  <nav class="site-nav" aria-label="Primary navigation">
-    <div class="wrap nav-inner">
-      <a class="brand" href="index.html">Jaami Hasan</a>
-      <div class="nav-links" id="site-menu">
-        <a href="career.html">Career</a>
-        <a href="index.html#work" aria-current="page">Work</a>
-        <a href="index.html#current">Current</a>
-        <a href="about.html">About</a>
-      </div>
-      <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch theme">☼</button>
-      <button class="nav-toggle" type="button" aria-controls="site-menu" aria-expanded="false" aria-label="Open menu">☰</button>
+
+<div id="gate" hidden>
+  <div class="box">
+    <p class="mark">Private</p>
+    <h1>Futures School</h1>
+    <label for="code" style="position:absolute;left:-9999px">Passcode</label>
+    <input id="code" type="password" inputmode="text" autocomplete="off" placeholder="PASSCODE">
+    <button id="enter">Enter</button>
+    <p class="err" id="err"></p>
+  </div>
+</div>
+
+<nav id="rail" aria-label="Course progress">
+  <p class="head">Complete</p>
+  <p class="pct"><span id="railDone">0</span><span style="font-size:20px;color:var(--mute)">/6</span></p>
+  <ol id="railList"></ol>
+  <button class="reset" id="reset">Reset progress</button>
+</nav>
+
+<div id="strip">
+  <span class="lbl"><span id="stripDone">0</span>/6 done</span>
+  <span class="bar" id="stripBar"></span>
+</div>
+
+<div class="wrap">
+
+  <header class="top">
+    <p class="eyebrow">Private · For friends only</p>
+    <h1>Futures<em>School</em></h1>
+    <p>Six modules, in order, start to finish. Everything you need to place a first trade without giving the account away in week one. Nothing you don't.</p>
+    <div class="specs">
+      <span>Modules <b>06</b></span>
+      <span>Runtime <b>~40m</b></span>
+      <span>Worked example <b>MGC</b></span>
     </div>
-  </nav>
-  <main>
-    <header class="page-head">
-      <div class="wrap reveal">
-        <a class="back-link" href="index.html">← Back</a>
-        <div class="section-kicker">Trading / Private</div>
-        <h1>Trading</h1>
-        <p>Private research, systems and strategy development.</p>
-      </div>
-    </header>
-    <section class="section">
-      <div class="wrap">
-        <article class="resume-block reveal">
-          <div class="card-kicker">Private area</div>
-          <h2>Trading library</h2>
-          <p>The private trading library will remain separate from the public portfolio. No strategy or video content is exposed on this public page.</p>
-        </article>
-      </div>
-    </section>
-  </main>
-  <footer class="foot"><div class="wrap foot-inner"><span>© 2026 Jaami Hasan</span><a href="index.html">Home</a></div></footer>
-  <script src="assets/js/site.js"></script>
+    <div class="notice">
+      <strong>Read this first.</strong> This is education, not advice. Futures are leveraged, and most retail traders lose money. Nothing here is a recommendation to trade, and nobody here is your financial advisor. Work through it on a simulator before a single dollar is at risk.
+    </div>
+  </header>
+
+  <main id="mods"></main>
+
+  <footer>
+    <span>© 2026 Jaami Hasan</span>
+    <a href="index.html">← Back to site</a>
+  </footer>
+</div>
+
+<script>
+/* ---------- storage: localStorage where available, memory otherwise ---------- */
+const Store=(()=>{const mem={};let ok=true;
+  try{localStorage.setItem('__t','1');localStorage.removeItem('__t')}catch(e){ok=false}
+  return{get(k){try{return ok?localStorage.getItem(k):mem[k]??null}catch(e){return mem[k]??null}},
+         set(k,v){try{ok?localStorage.setItem(k,v):mem[k]=v}catch(e){mem[k]=v}},
+         del(k){try{ok?localStorage.removeItem(k):delete mem[k]}catch(e){delete mem[k]}}}})();
+
+/* ---------- GATE: change this, or delete the gate entirely ---------- */
+const PASSCODE="GRID";
+const gate=document.getElementById('gate');
+if(Store.get('fs_open')!=='1'){
+  gate.hidden=false;document.body.style.overflow='hidden';
+  const tryIt=()=>{
+    if(document.getElementById('code').value.trim().toUpperCase()===PASSCODE){
+      Store.set('fs_open','1');gate.remove();document.body.style.overflow='';
+    }else{document.getElementById('err').textContent="Wrong passcode. Ask Jay.";}
+  };
+  document.getElementById('enter').addEventListener('click',tryIt);
+  document.getElementById('code').addEventListener('keydown',e=>{if(e.key==='Enter')tryIt()});
+}
+
+/* ---------- COURSE CONTENT ----------
+   Add YouTube IDs to yt:"" — the 11-character string after v= in the URL.
+   Example: https://youtube.com/watch?v=dQw4w9WgXcQ  →  yt:"dQw4w9WgXcQ"
+   Leave it empty and the slot shows a placeholder.                        */
+const COURSE=[
+{
+ id:"m1",title:"Contract Mechanics",mins:5,
+ outcomes:["Read a contract spec sheet and know what one tick is worth","Turn a price move into dollars before you place the trade","Say why a micro is the only sane place to start"],
+ topics:["What a futures contract obligates you to do","Full-size, mini, micro: same market, different bet size","Tick size, tick value, point value","Contract months, expiration and rollover"],
+ videos:[{yt:"Dh5KFZqEHqU",label:"Futures Trading Explained For Beginners in 5 Minutes"}],
+ quiz:[
+  {q:"MGC moves in 0.10 ticks worth $1.00 each. Gold rises 4.0 points and you're long one contract. What did you make?",
+   a:["$4","$40","$400","$1,000"],c:1,
+   why:"4.0 points ÷ 0.10 = 40 ticks. 40 × $1.00 = $40. Every futures P&L question is this same two-step: convert the move to ticks, multiply by tick value."},
+  {q:"Why do commercial hedgers use futures?",
+   a:["To make money on price direction","To lock in a price for something they'll buy or sell later","Because leverage is cheaper than stocks","To avoid taxes on physical goods"],c:1,
+   why:"A producer locks in a selling price, a manufacturer locks in a buying cost. Speculators take the other side and get paid for carrying that risk. The market exists for the hedgers — you're the guest."},
+  {q:"What is rollover?",
+   a:["Reinvesting profits into a bigger position","Volume and open interest moving to the next contract month as expiration nears","The broker resetting your margin overnight","Carrying a losing trade past the session close"],c:1,
+   why:"Contracts expire. Liquidity migrates to the front month, and if you're charting the old one you're trading a ghost. Know your roll dates."}]
+},
+{
+ id:"m2",title:"Account & Execution",mins:3,
+ outcomes:["Explain what margin actually is and what it isn't","Place, bracket and flatten a position without hesitating","Choose between a personal account and a prop evaluation with clear eyes"],
+ topics:["Day-trade margin vs initial and maintenance margin","Order types: market, limit, stop, stop-limit, bracket/OCO","Sessions: Globex open, Asia, London, New York","Prop firm evaluations: rules, drawdown types, what you're buying"],
+ videos:[{yt:"Phkue5TmwRc",label:"Prop Firm vs Personal Account: What Every Futures Trader Needs to Know"},{yt:"rJj4ZbnzEGs",label:"How To Use TradingView For Beginners — platform tour"}],
+ explainer:"<p>Margin is not a cost and not a down payment. It's a good-faith deposit the exchange holds while your position is open, and it's the reason a few hundred dollars can control a contract worth tens of thousands. That ratio is leverage, and it works identically in both directions.</p><p>There are two numbers. <strong>Initial margin</strong> is set by the exchange and applies if you hold past the session close. <strong>Day-trade margin</strong> is set by your broker, is often a fraction of the initial figure, and evaporates at a specific clock time — miss it and you either owe the full amount or get auto-liquidated at whatever price the market offers. Find that exact time in your broker's docs before your first trade.</p><p>Four order types cover almost everything. A <strong>market</strong> order fills now at whatever price exists. A <strong>limit</strong> order fills at your price or better, or not at all. A <strong>stop</strong> becomes a market order once price touches your level — so it fills, but not necessarily where you wanted. A <strong>stop-limit</strong> gives you price control and accepts the risk of no fill.</p><p>Wrap every entry in a <strong>bracket</strong> — a target and a stop submitted together as an OCO pair. When one fills the other cancels itself. Without it, a filled target can leave an orphaned stop sitting in the market, ready to open a fresh position in the opposite direction while you're away from the screen.</p><p>If you're using a prop evaluation, the rule that ends most accounts is the <strong>trailing drawdown</strong>. It follows your highest account peak, and at many firms that peak includes open, unrealised profit. Run $600 up and give it back, and your loss limit has already ratcheted up behind you. Read the exact wording before you pay the fee.</p>",
+ quiz:[
+  {q:"Day-trade margin is lower than initial margin because…",
+   a:["The exchange discounts intraday risk","Your broker sets it, and it only applies if you're flat by the session close","Micros are exempt from exchange margin","It's a promotional rate for new accounts"],c:1,
+   why:"Day margin is a broker courtesy, not an exchange rule. Hold past the cutoff and you owe full initial margin — or get auto-liquidated. Know your broker's exact time."},
+  {q:"You place a bracket (OCO) around a long position. Your target fills. What happens to the stop?",
+   a:["It stays live and could open a short","It cancels automatically","It converts to a market order","It trails the new price"],c:1,
+   why:"One cancels the other — that's the whole point. Without a bracket, an orphaned stop can flip you into a position you never intended."},
+  {q:"On most prop evaluations, a trailing drawdown limit follows…",
+   a:["Your starting balance only","Your highest account peak, including unrealized gains","The daily loss limit","The average of your last ten trades"],c:1,
+   why:"This is what quietly kills accounts. Run up $600 in open profit, give it back, and your loss limit has already moved up with the peak. Read the exact wording before you pay a fee."}]
+},
+{
+ id:"m3",title:"Risk First",mins:4,risk:true,
+ outcomes:["Size a position from your stop instead of your hope","Express every trade as a multiple of R","Know your daily stop and honour it without negotiating"],
+ topics:["Risk per trade: the fixed-percentage method","Position sizing math, worked twice","The R concept — one unit of risk, every trade","Daily loss limit and the walk-away rule"],
+ videos:[{yt:"O0SNjO9CyQ8",label:"How to Calculate Risk in Futures (Simplified in 5 Minutes)"}],
+ explainer:"<p>Position size is not a feeling. It's arithmetic, and it runs in one direction only: the chart tells you where the stop goes, the stop tells you how many contracts you can hold. Reverse that order — pick a size first, then place a stop where it feels comfortable — and you've quietly decided to lose more than you planned.</p><p>Three inputs. What you'll risk on this trade, how far the stop sits in ticks, and what a tick is worth.</p><div class='calc'><span class='r'>Account</span> $5,000<br><span class='r'>Risk per trade</span> 1% = <b>$50</b><br><span class='r'>Stop distance</span> 25 ticks<br><span class='r'>Tick value</span> $1.00<br><br><span class='r'>Risk per contract</span> 25 × $1.00 = <b>$25</b><br><span class='r'>Contracts</span> $50 ÷ $25 = <b>2</b></div><p>Always round down. A fractional answer of 2.8 means two contracts, not three.</p><p>Now stop thinking in dollars. That $50 is <strong>1R</strong> — one unit of risk. A trade that makes $150 is a 3R winner whether you were trading one micro or ten. Speaking in R lets you compare trades across account sizes, spot which setups actually pay, and see instantly that a 3R win erases three losses.</p><p>Set a daily stop as well as a per-trade stop. Two or three losses in a row is a normal Tuesday, not a signal to trade bigger. When the daily number hits, the platform closes — that decision is made now, in advance, not in the moment when you're down and reasoning badly.</p><p>The reason all of this matters is that losses and gains are not symmetric:</p><div class='calc'><span class='r'>Down 10%</span> → need <b>+11%</b> to recover<br><span class='r'>Down 25%</span> → need <b>+33%</b><br><span class='r'>Down 50%</span> → need <b>+100%</b><br><span class='r'>Down 75%</span> → need <b>+300%</b></div><p>Small, consistent risk isn't timidity. It's the only thing that keeps the recovery math survivable.</p>",
+ rules:["Never move a stop away from price.","Never add to a loser.","When the daily stop hits, the platform closes."],
+ quiz:[
+  {q:"You'll risk $50 on a trade. Your stop is 25 ticks away and each tick is worth $1.00. How many contracts?",
+   a:["1","2","5","25"],c:1,
+   why:"25 ticks × $1.00 = $25 of risk per contract. $50 ÷ $25 = 2 contracts. Notice the order: the stop comes from the chart, the size comes from the stop. Never the reverse."},
+  {q:"You're down 50% on the account. What gain gets you back to even?",
+   a:["50%","75%","100%","150%"],c:2,
+   why:"$10,000 down 50% is $5,000, and $5,000 must double to return. Losses compound against you harder than gains compound for you — which is the entire argument for small risk per trade."},
+  {q:"Price is approaching your stop and the setup 'still looks good.' What do you do?",
+   a:["Widen the stop to give it room","Add a contract to improve the average","Let the stop do its job","Close half and widen the rest"],c:2,
+   why:"The stop was your risk decision made calmly, before money was on the line. Moving it replaces that decision with one made under stress, by the worst version of you."}]
+},
+{
+ id:"m4",title:"Reading Price",mins:3,
+ outcomes:["Describe the market's structure in one sentence","Mark the levels that matter before the session opens","Use three indicators and ignore the rest"],
+ topics:["Candles, and choosing a timeframe you can actually trade","Market structure: trend, range, higher highs and lower lows","Support, resistance and prior-session levels","EMA for regime, ATR for volatility, VWAP for intraday reference"],
+ videos:[{yt:"i1N2MYX3uE4",label:"Candlesticks Explained In The EASIEST Way Possible"},{yt:"vNzsmCyWV_g",label:"Master Support & Resistance Trading Strategy"}],
+ explainer:"<p>Before any indicator, answer one question: what is price actually doing? There are only three answers. Trending up, trending down, or ranging.</p><p>An uptrend is a sequence of <strong>higher highs and higher lows</strong>. Each pullback stops above the last one, which means buyers keep showing up earlier than before. A downtrend is the mirror. A range is neither — price rotating between two levels while nobody's in control.</p><figure><svg viewBox='0 0 400 170' xmlns='http://www.w3.org/2000/svg' role='img' aria-label='Chart showing higher highs and higher lows, then a break of structure'><line x1='0' y1='78' x2='400' y2='78' stroke='var(--rule)' stroke-dasharray='3 4'/><polyline points='10,145 70,82 110,108 172,44 212,74 252,58 300,112 340,128 385,120' fill='none' stroke='var(--gold)' stroke-width='2' stroke-linejoin='round'/><g font-family='JetBrains Mono, monospace' font-size='9' fill='var(--mute)'><text x='60' y='72'>HH</text><text x='104' y='124'>HL</text><text x='163' y='34'>HH</text><text x='206' y='90'>HL</text><text x='244' y='48'>LH</text><text x='286' y='134'>break</text><text x='310' y='72' fill='var(--brick)'>structure fails</text></g></svg><figcaption>Higher highs, higher lows — until the higher low breaks.</figcaption></figure><p>That last part is the useful bit. When price takes out the most recent higher low, the sequence is broken and your reason for being long has expired — no matter what any indicator says.</p><p>Mark your levels before the session opens, not during it: the prior session's high and low, the overnight range, and the day's open. These matter for one unglamorous reason — everyone else can see them too, so orders and reactions cluster there. There's nothing magic about the price itself, only about the shared attention on it.</p><p>Three indicators is the whole toolkit. <strong>EMA</strong> (say 50 and 200) for regime — are you trading with the larger flow or against it. <strong>ATR</strong> for volatility, which turns an arbitrary stop in ticks into one sized to what today's market is actually doing. <strong>VWAP</strong> as an intraday fair-value reference. Everything past that is another opinion about data you already have.</p>",
+ quiz:[
+  {q:"An uptrend, structurally, is…",
+   a:["Price above a moving average","A sequence of higher highs and higher lows","Three green candles in a row","Rising volume"],c:1,
+   why:"Structure is what price is doing; indicators are a lagging opinion about it. When the higher low fails, the trend is in question — regardless of what your EMA says."},
+  {q:"ATR tells you…",
+   a:["Which direction price is heading","How far price typically travels in a period","Whether the market is overbought","Where institutions are positioned"],c:1,
+   why:"ATR is a volatility measure with no directional content. Its real use is stop placement: a stop set in ticks is arbitrary, a stop set in ATR adapts to the day."},
+  {q:"Why mark the prior session's high and low?",
+   a:["They predict tomorrow's direction","Other traders watch them, so resting orders and reactions cluster there","They're required for prop firm compliance","They reset the daily ATR"],c:1,
+   why:"Levels matter because they're visible to everyone. That's it — no magic, just shared attention creating real order flow at a known price."}]
+},
+{
+ id:"m5",title:"Building An Edge",mins:4,
+ outcomes:["Compute expectancy and know whether a strategy is worth trading","Write your entry, stop and target as rules someone else could follow","Backtest without quietly cheating"],
+ topics:["Expectancy: (win% × avg win) − (loss% × avg loss)","The three decisions — trigger, stop, target","Sample size, curve fitting and hindsight bias","The journal: what to log, and the weekly review"],
+ videos:[{yt:"zwvtv0gBSdc",label:"Optional — Fair Value Gaps: one example of an entry trigger, not a requirement"}],
+ explainer:"<p>Win rate is the most quoted and least useful number in trading. A 90% win rate can bankrupt you and a 35% win rate can compound for years. The number that settles it is <strong>expectancy</strong> — what one trade is worth on average, once wins and losses are weighed together.</p><div class='calc'>Expectancy = (win% × avg win) − (loss% × avg loss)</div><p>Express the wins and losses in R and the answer comes out in R too:</p><div class='calc'><span class='r'>Win rate</span> 55%<br><span class='r'>Average win</span> 1.5R<br><span class='r'>Average loss</span> 1R<br><br>(0.55 × 1.5) − (0.45 × 1)<br>= 0.825 − 0.45 = <b>+0.375R</b></div><p>Every trade is worth about 37% of whatever you risked. Risk $50 a trade, take 200 trades a year, and the math points at roughly $3,750 — before commissions, and only if you actually follow the rules every time.</p><p>Run it on two very different traders and the point lands:</p><div class='calc'><span class='r'>A —</span> 70% wins at 0.5R → (0.70 × 0.5) − (0.30 × 1) = <b>+0.05R</b><br><span class='r'>B —</span> 40% wins at 3R &nbsp;&nbsp;→ (0.40 × 3) − (0.60 × 1) = <b>+0.60R</b></div><p>Trader A wins almost every day and is barely above water. Trader B loses six times out of ten and makes twelve times as much per trade. Losing often is not the same as losing.</p><p>Two ways people fool themselves. <strong>Sample size:</strong> a 78% win rate over fourteen trades is noise. You want fifty at minimum, a hundred before you trust it, and you want the losing stretches in the sample so you've seen the drawdown before it's real money. <strong>Curve fitting:</strong> if you tweak the rules after seeing which trades lost and re-run the test, you've built something that explains the past perfectly and knows nothing about tomorrow. Rules get written before the test, not tuned during it.</p><p>Then journal every trade — setup, entry, stop, exit, R result, and what you were thinking. Recalculate expectancy monthly. A number that's drifting down is telling you something long before your account balance does.</p>",
+ quiz:[
+  {q:"You win 55% of trades. Winners average 1.5R, losers average 1R. Expectancy per trade?",
+   a:["−0.10R","+0.375R","+0.55R","+1.5R"],c:1,
+   why:"(0.55 × 1.5) − (0.45 × 1) = 0.825 − 0.45 = +0.375R. Positive, so it's tradeable — but note that a 45% loss rate still means five losses in a row will happen and mean nothing."},
+  {q:"Your backtest shows a 78% win rate over 14 trades. What's the problem?",
+   a:["The win rate is too high to be real","Fourteen trades is noise, not evidence","Backtests always overstate results","Nothing — that's a strong edge"],c:1,
+   why:"At that sample size, luck dominates. You want enough trades that a hot streak can't carry the result — and you want the losing stretches in your sample, so you've seen the drawdown before it's real money."},
+  {q:"Which of these makes a backtest dishonest?",
+   a:["Testing on more than one instrument","Adjusting the rules after seeing which trades lost, then re-running","Including commissions","Testing across different sessions"],c:1,
+   why:"That's curve fitting: you've built a strategy that perfectly explains the past and knows nothing about the future. Rules get set before the test, not tuned during it."}]
+},
+{
+ id:"m6",title:"Execution & Going Live",mins:10,
+ outcomes:["Run a pre-market routine and trade from a written plan","Name the mistake you're making while you're making it","Know exactly what has to be true before you size up"],
+ topics:["Pre-market routine and the trade-plan checklist","The four killers: revenge trading, overtrading, moving stops, size creep","Sim → one micro → scale, with criteria for each step","Section 1256 and the 60/40 tax treatment"],
+ videos:[{yt:"Be2GCdGSZg0",label:"9 Years of Trading Psychology in 9 Minutes"}],
+ quiz:[
+  {q:"You take a full stop-out, and immediately re-enter to make it back. This is…",
+   a:["Aggressive but valid","Revenge trading — the loss is now driving the decisions","Correct if the setup is still valid","Standard scalping practice"],c:1,
+   why:"The tell isn't the re-entry, it's the motive. If the trade exists because you want the money back rather than because the plan produced a signal, you've handed the account to your emotions."},
+  {q:"Under Section 1256, gains on futures are generally treated as…",
+   a:["100% short-term","60% long-term, 40% short-term regardless of holding period","Ordinary income","Tax-deferred until withdrawal"],c:1,
+   why:"The 60/40 split applies even to a trade held two minutes, which is a genuine structural advantage over equities. Positions are also marked to market at year end. Confirm the details with a tax professional before you file."},
+  {q:"When is it time to increase size?",
+   a:["After a big winning day","When the account can absorb it and you've hit your consistency criteria","When you feel confident in the setup","After recovering a drawdown"],c:1,
+   why:"Size increases are a math decision made in advance — a target number of trades, a positive expectancy, a drawdown you survived without breaking rules. Sizing up after a win is how a good week becomes a bad month."}]
+}];
+
+/* ---------- render ---------- */
+const modsEl=document.getElementById('mods'),railList=document.getElementById('railList'),stripBar=document.getElementById('stripBar');
+const pad=n=>String(n).padStart(2,'0');
+
+COURSE.forEach((m,i)=>{
+  const d=document.createElement('details');d.className='mod';d.id=m.id;
+  d.innerHTML=`
+   <summary>
+     <span class="num">${pad(i+1)}</span>
+     <span class="ttl">${m.title}</span>
+     <span class="tick" data-tick="${m.id}">${m.mins} min</span>
+     <span class="meta">${[m.videos&&m.videos.length?m.videos.length+' video'+(m.videos.length>1?'s':''):'',m.explainer?'short read':''].filter(Boolean).join(' · ')} · ${m.topics.length} topics · 3 questions</span>
+   </summary>
+   <div class="body">
+     ${m.videos&&m.videos.length ? `<h3 class="sub">Watch</h3>` + m.videos.map(v=>`
+     <div class="slot">
+       <p class="cap">${v.label}</p>
+       <div class="frame${v.yt?' filled':''}">
+         ${v.yt
+           ? `<iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/${v.yt}" title="${v.label}" allow="accelerometer;encrypted-media;picture-in-picture" allowfullscreen></iframe>`
+           : `<div class="empty"><span>Video slot open</span><code>yt:"" → paste the ID</code></div>`}
+       </div>
+     </div>`).join('') : ''}
+     ${m.explainer ? `<h3 class="sub">Read</h3><div class="read">${m.explainer}</div>` : ''}
+     <h3 class="sub">Covered</h3>
+     <div class="topics">${m.topics.map(t=>`<span>${t}</span>`).join('')}</div>
+     ${m.rules?`<div class="rules"><p>Non-negotiable</p><ul>${m.rules.map(r=>`<li>${r}</li>`).join('')}</ul></div>`:''}
+     <h3 class="sub">You should now be able to</h3>
+     <ul class="outcomes">${m.outcomes.map(o=>`<li>${o}</li>`).join('')}</ul>
+     <h3 class="sub">Checkpoint</h3>
+     <div class="quiz" data-mod="${m.id}">
+       ${m.quiz.map((q,qi)=>`
+         <div class="q" data-c="${q.c}">
+           <p class="ask"><span>Q${qi+1}</span>${q.q}</p>
+           ${q.a.map((a,ai)=>`<label class="opt"><input type="radio" name="${m.id}-${qi}" value="${ai}">${a}</label>`).join('')}
+           <p class="why">${q.why}</p>
+         </div>`).join('')}
+       <button class="check">Check answers</button><span class="score"></span>
+     </div>
+   </div>`;
+  modsEl.appendChild(d);
+
+  railList.insertAdjacentHTML('beforeend',`<li data-rail="${m.id}"><a href="#${m.id}"><span class="n">${pad(i+1)}</span> ${m.title}</a></li>`);
+  stripBar.insertAdjacentHTML('beforeend',`<i data-bar="${m.id}"></i>`);
+});
+
+/* ---------- grading ---------- */
+document.querySelectorAll('.quiz').forEach(quiz=>{
+  quiz.querySelector('.check').addEventListener('click',()=>{
+    let right=0;
+    quiz.querySelectorAll('.q').forEach(q=>{
+      const correct=+q.dataset.c;
+      const picked=q.querySelector('input:checked');
+      q.querySelectorAll('.opt').forEach(o=>o.classList.remove('right','wrong'));
+      q.querySelectorAll('.opt')[correct].classList.add('right');
+      if(picked){
+        if(+picked.value===correct)right++;
+        else picked.closest('.opt').classList.add('wrong');
+      }
+      q.querySelector('.why').classList.add('show');
+    });
+    const s=quiz.querySelector('.score'),pass=right>=2;
+    s.textContent=`${right}/3 — ${pass?'passed':'review and retry'}`;
+    s.classList.toggle('pass',pass);
+    if(pass){Store.set('fs_'+quiz.dataset.mod,'1');paint()}
+  });
+});
+
+/* ---------- progress ---------- */
+function paint(){
+  let done=0;
+  COURSE.forEach(m=>{
+    const ok=Store.get('fs_'+m.id)==='1';if(ok)done++;
+    document.querySelector(`[data-rail="${m.id}"]`).classList.toggle('done',ok);
+    document.querySelector(`[data-bar="${m.id}"]`).classList.toggle('on',ok);
+    const t=document.querySelector(`[data-tick="${m.id}"]`);
+    t.textContent=ok?'complete':`${m.mins} min`;t.classList.toggle('pass',ok);
+  });
+  document.getElementById('railDone').textContent=done;
+  document.getElementById('stripDone').textContent=done;
+}
+document.getElementById('reset').addEventListener('click',()=>{
+  COURSE.forEach(m=>Store.del('fs_'+m.id));
+  document.querySelectorAll('.score').forEach(s=>{s.textContent='';s.classList.remove('pass')});
+  document.querySelectorAll('.why').forEach(w=>w.classList.remove('show'));
+  document.querySelectorAll('.opt').forEach(o=>o.classList.remove('right','wrong'));
+  document.querySelectorAll('input[type=radio]').forEach(r=>r.checked=false);
+  paint();
+});
+paint();
+</script>
 </body>
 </html>
