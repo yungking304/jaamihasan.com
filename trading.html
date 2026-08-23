@@ -798,7 +798,11 @@ async function doLogin(){
     PROGRESS=res.progress||{};DONE_AT=res.done_at||'';
     cacheAll();flagSync(true);openCourse();
   }catch(e){
-    err.textContent=/roster|passcode/i.test(e.message)?"That code isn't on the roster. Ask Jay.":"Couldn't reach the server. Check your connection and try again.";
+    console.error('Futures School login failed:',e);
+    if(!API_URL) err.textContent='Setup incomplete — API_URL is still blank in this file.';
+    else if(/roster|passcode/i.test(e.message)) err.textContent="That code isn't on the roster. Ask Jay.";
+    else if(/Session expired/i.test(e.message)) err.textContent='Session expired. Enter your passcode again.';
+    else err.textContent="Couldn't reach the server. See the browser console for details.";
   }finally{btn.disabled=false;btn.textContent='Enter'}
 }
 
