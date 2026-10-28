@@ -111,6 +111,8 @@ img.is-missing { visibility: hidden; }
 .contact-link strong { color: var(--gold); font-size: 22px; }
 .foot { border-top: 1px solid var(--hairline); padding: 26px 0 36px; color: var(--muted); font-family: var(--mono); font-size: 9px; letter-spacing: .12em; text-transform: uppercase; }
 .foot-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.foot-hq { color: inherit; text-decoration: none; opacity: .55; }
+.foot-hq:hover, .foot-hq:focus-visible { opacity: 1; text-decoration: underline; }
 .back-link { display: inline-flex; min-height: 44px; align-items: center; color: var(--muted); text-decoration: none; font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; }
 .page-head { min-height: 62svh; display: flex; align-items: flex-end; padding: 140px 0 72px; border-bottom: 1px solid var(--hairline); }
 .page-head h1 { font-size: clamp(64px, 10vw, 140px); line-height: .84; max-width: 9ch; }
