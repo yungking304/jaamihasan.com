@@ -1,97 +1,142 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<!doctype html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Jaami Hasan. Builder, leader, developer and creator. Career, software, music, trading and visual work.">
-  <meta name="theme-color" content="#0E0E11">
-  <title>Jaami Hasan</title>
-  <link rel="stylesheet" href="assets/css/site.css?v=20260819f">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jaami Hasan</title>
+<meta name="description" content="Jaami Hasan. Builder, leader, developer and creator. Operations leader turned builder, and the maker of The Phantom Grid on the App Store.">
+<meta name="theme-color" content="#050505">
+<link rel="canonical" href="https://jaamihasan.com/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Jaami Hasan">
+<meta property="og:description" content="Operations leader turned builder. Apps, businesses and music.">
+<meta property="og:url" content="https://jaamihasan.com/">
+<meta property="og:image" content="https://jaamihasan.com/og-phantom-grid.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" as="image" href="assets/img/jaami-studio.jpg">
+<script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('js')</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Allura&family=Jost:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/home.css?v=20261103">
 </head>
 <body>
-  <nav class="site-nav" aria-label="Primary navigation">
-    <div class="wrap nav-inner">
-      <a class="brand" href="index.html" aria-current="page">Jaami Hasan</a>
-      <div class="nav-links" id="site-menu">
-        <a href="career.html">Career</a>
-        <a href="#work">Work</a>
-        <a href="#current">Current</a>
-        <a href="about.html">About</a>
+<nav id="nav"><div class="wrap">
+  <a class="brand" href="#top">JAAMI HASAN</a>
+  <div class="links"><a href="#phantom">PHANTOM GRID</a><a href="#career">CAREER</a><a href="#work">WORK</a><a href="#current">NOW</a><a href="about.html">ABOUT</a></div>
+  <a class="outline" href="#contact" data-mag>Let's talk <span>→</span></a>
+</div></nav>
+
+<div class="climb" id="climb" aria-hidden="true"><svg viewBox="0 0 12 12"><rect class="b" x="3" y="0" width="6" height="4"/><rect class="b" x="2" y="4" width="8" height="5"/><rect class="l" id="legA" x="2" y="9" width="3" height="3"/><rect class="l" id="legB" x="7" y="9" width="3" height="3"/><rect fill="#050505" x="6" y="1" width="2" height="1"/></svg></div>
+
+<header class="hero" id="top">
+  <div class="pic"><div class="frame" id="heroFrame"><img src="assets/img/jaami-studio.jpg" alt="Jaami Hasan in a black sweater against a black backdrop"><div class="light" id="light"></div><div class="shade" id="heroShade"></div></div></div>
+  <canvas id="dust" aria-hidden="true"></canvas>
+  <div class="wrap inner" id="heroIn">
+    <a class="pill seq" style="--d:1.5s" href="#phantom"><i></i>The Phantom Grid is on the App Store</a>
+    <h1 class="sig">Jaami Hasan</h1>
+    <div class="roles caps seq" style="--d:1.7s">Builder<i>·</i>Leader<i>·</i>Developer<i>·</i>Creator</div>
+    <p class="intro seq" style="--d:1.85s">Operations leader turned builder. Eighteen years running audited systems — now shipping apps, businesses and music.</p>
+    <div class="cta seq" style="--d:2s"><a class="solid" href="#phantom" data-mag>See my work <span>→</span></a><a class="outline" href="career.html" data-mag>Resume <span>↗</span></a></div>
+  </div>
+  <div class="scroll caps seq" style="--d:2.4s">Scroll</div>
+</header>
+
+<div class="wrap stats"><div class="grid" data-in>
+  <div class="stat"><b><i data-count="18">18</i><em>+</em></b><span>Years in operations</span></div>
+  <div class="stat"><b><em>−</em><i data-count="50">50</i>%</b><span>Non-conformance events</span></div>
+  <div class="stat"><b>MBA · PMP</b><span>Lean Six Sigma Black Belt</span></div>
+  <div class="stat"><b><i data-count="6">6</i><em>+</em></b><span>Things built in 2026</span></div>
+</div></div>
+
+<div class="pg" id="phantom"><div class="pgstick"><div class="pgbox" id="pgbox">
+  <div class="plane"></div>
+  <div class="sparks" id="sparks"></div>
+  <div class="pgin">
+    <div class="pgl">
+      <div class="num" data-in>01 — Flagship</div>
+      <h2 class="pgt">The Phantom Grid</h2>
+      <div class="beats">
+        <div class="beat on"><b>My biggest build.</b><p>A native iOS arcade game, designed, built and shipped to the App Store as a complete product.</p><span class="hint">Keep scrolling to play</span></div>
+        <div class="beat"><b class="big">15</b><p>hand-built levels, each one laid out tile by tile.</p></div>
+        <div class="beat"><b class="big">6</b><p>control schemes, so it plays the way you want to play it.</p></div>
+        <div class="beat"><b>Enemy AI.</b><p>The phantoms hunt you through the grid. Dig a hole and they fall in. Watch the purple one.</p></div>
+        <div class="beat"><b>Leaderboards.</b><p>Every level has its own. Grab the gold, then find the way out.</p></div>
+        <div class="beat"><b>Level clear.</b><p>Swift + SpriteKit. Live on the App Store now.</p><div class="cta"><a class="solid" href="https://apps.apple.com/app/the-phantom-grid/id6785081612" target="_blank" rel="noopener" data-mag>App Store <span>→</span></a><a class="outline" href="game.html" data-mag>Play in browser <span>↗</span></a></div></div>
       </div>
-      <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch theme">☼</button>
-      <button class="nav-toggle" type="button" aria-controls="site-menu" aria-expanded="false" aria-label="Open menu">☰</button>
+      <div class="bar"><i></i></div>
     </div>
-  </nav>
+    <div class="panel">
+      <div class="hud"><div>Score<b id="hScore">0</b></div><div>Gold<b id="hGold">0/9</b></div><div>Time<b id="hTime">0:00</b></div><div>Lives<b>3</b></div><div>Lvl<b>1</b></div></div>
+      <canvas id="game" width="1232" height="784" role="img" aria-label="The Phantom Grid gameplay, driven by scrolling"></canvas>
+      <div class="clear" id="clear">LEVEL CLEAR</div>
+    </div>
+  </div>
+</div></div></div>
 
-  <main>
-    <section class="hero" aria-labelledby="hero-title">
-      <div class="hero-media" aria-hidden="true">
-        <img src="assets/img/hero-jaami.jpg?v=20260819d" alt="">
-      </div>
-      <div class="wrap hero-content">
-        <h1 class="hero-signature" id="hero-title">Jaami Hasan</h1>
-        <div class="hero-role" aria-label="Builder, leader, developer, creator">
-          <span>Builder</span><span>Leader</span><span>Developer</span><span>Creator</span>
-        </div>
-      </div>
-      <div class="scroll-cue" aria-hidden="true">Scroll</div>
-    </section>
+<div class="career" id="career"><div class="cstick">
+  <div class="pic"><div class="frame" id="deskFrame"><img src="assets/img/jaami-desk.jpg" alt="Jaami Hasan at a dark wood desk at night with a laptop and notebook">
+    <div class="lamp"></div>
+    <i class="tw" style="left:57.3%;top:20.7%;--d:0s"></i><i class="tw" style="left:58.3%;top:30.3%;--d:1.3s"></i><i class="tw" style="left:80.1%;top:25.5%;--d:.6s"></i><i class="tw" style="left:85.9%;top:25.3%;--d:2.2s"></i><i class="tw" style="left:79.2%;top:33.5%;--d:3s"></i><i class="tw" style="left:80.7%;top:33.5%;--d:1.8s"></i>
+  </div></div>
+  <div class="wrap cin">
+    <div class="num" data-in>02</div>
+    <h2 data-in><span class="mask"><span>Career &amp;</span></span><span class="mask" style="--d:.1s"><span>Portfolio</span></span></h2>
+    <p class="lead">Quality and compliance leader in a continuously audited environment. I build repeatable systems and turn messy problems into structured execution.</p>
+    <ul class="tl" id="tl">
+      <li><em>2007 — Now</em><b>QA &amp; Compliance Program Manager</b><span>Wayne-Sanderson Farms · Bryan, TX</span></li>
+      <li><em>2013</em><b>HACCP Certified</b><span>+ SQF Practitioner (2024)</span></li>
+      <li><em>2024</em><b>MBA, Business Management</b><span>Western Governors University</span></li>
+      <li><em>2026</em><b>Lean Six Sigma Black Belt</b><span>+ Google Project Management certificate</span></li>
+    </ul>
+    <a class="clink" href="career.html">Full experience &amp; resume <span>→</span></a>
+  </div>
+</div></div>
 
-    <section class="section" id="career">
-      <div class="wrap">
-        <div class="career-panel reveal">
-          <div class="career-copy">
-            <div class="section-kicker">01</div>
-            <h2>Career &amp;<br>Portfolio</h2>
-            <p>18 years in operations and quality leadership.<br>MBA · PMP · Lean Six Sigma Black Belt.<br>Building the next chapter in technology.</p>
-            <a class="btn" href="career.html">View experience / resume <span aria-hidden="true">→</span></a>
-          </div>
-          <div class="career-visual" aria-hidden="true"></div>
-        </div>
-      </div>
-    </section>
+<div class="mq" aria-hidden="true"><div data-mq="-1">Builder<u>◆</u>Leader<u>◆</u>Developer<u>◆</u>Creator<u>◆</u>Builder<u>◆</u>Leader<u>◆</u>Developer<u>◆</u>Creator<u>◆</u></div></div>
 
-    <section class="section" id="work">
-      <div class="wrap">
-        <div class="work-head reveal"><div><div class="section-kicker">02</div><h2>What I Do</h2></div></div>
-        <div class="work-grid">
-          <a class="work-card reveal" href="development.html"><div><div class="card-kicker">&lt;/&gt;</div><h3>Apps &amp; Software</h3><p>Native iOS work, automation tools and practical software projects.</p></div><span class="work-arrow" aria-hidden="true">→</span></a>
-          <a class="work-card reveal" data-delay="1" href="music.html"><div><div class="card-kicker">▥</div><h3>Music</h3><p>Original music, production and creative releases.</p></div><span class="work-arrow" aria-hidden="true">→</span></a>
-          <a class="work-card reveal" data-delay="2" href="trading.html"><div><div class="card-kicker">↗</div><h3>Trading</h3><p>Private / passcode required.</p></div><span class="work-arrow" aria-hidden="true">→</span></a>
-          <a class="work-card reveal" data-delay="3" href="visuals.html"><div><div class="card-kicker">▣</div><h3>Visuals</h3><p>Photography, video and visual experiments.</p></div><span class="work-arrow" aria-hidden="true">→</span></a>
-        </div>
-      </div>
-    </section>
+<section id="work" style="padding-top:60px"><div class="wrap">
+  <div class="num" data-in>03</div>
+  <h2 data-in><span class="mask"><span>Things I've built</span></span></h2>
+  <div class="built">
+    <a class="tile" href="#phantom" data-r data-tilt style="--d:0s"><div class="art a-grid"></div><div class="ico"><svg viewBox="0 0 24 24"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></svg></div><b>Phantom Grid</b><small>Native iOS arcade game</small><span class="live">App Store</span><span class="arrow">→</span></a>
+    <a class="tile" href="https://thecandle.io" target="_blank" rel="noopener" data-r data-tilt style="--d:.07s"><div class="art a-glow" style="--ac:rgba(212,166,74,.35)"></div><div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3c1.5 2 1.5 3.5 0 5-1.5-1.5-1.5-3 0-5z"/><rect x="8" y="10" width="8" height="11" rx="1.5"/></svg></div><b>The Candle</b><small>Futures-trading school</small><span class="live">thecandle.io</span><span class="arrow">→</span></a>
+    <a class="tile" href="hq.html" data-r data-tilt style="--d:.14s"><svg class="art a-hq" viewBox="0 0 200 250"><rect x="20" y="20" width="70" height="70" rx="10" style="--d:0s"/><rect x="105" y="20" width="75" height="40" rx="10" style="--d:1.5s"/><rect x="105" y="72" width="75" height="90" rx="10" style="--d:3s"/><rect x="20" y="104" width="70" height="58" rx="10" style="--d:4.5s"/></svg><div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="5" rx="2"/><rect x="13" y="10" width="8" height="11" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/></svg></div><b>Business HQ</b><small>My command center</small><span class="arrow">→</span></a>
+    <a class="tile" href="https://cerulane.com" target="_blank" rel="noopener" data-r data-tilt style="--d:.21s"><div class="art a-glow" style="--ac:rgba(96,165,250,.25);--ax:70%;--ay:25%"></div><div class="ico"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M17 7v6M14 10h6"/></svg></div><b>Cerulane</b><small>Websites for local business</small><span class="arrow">→</span></a>
+    <a class="tile" href="music.html" data-r data-tilt style="--d:0s"><svg class="art a-eq" viewBox="0 0 200 250" preserveAspectRatio="none"><rect x="28" y="60" width="5" height="100" rx="2.5" style="--d:.1s"/><rect x="44" y="40" width="5" height="140" rx="2.5" style="--d:.5s"/><rect x="60" y="70" width="5" height="80" rx="2.5" style="--d:.25s"/><rect x="76" y="30" width="5" height="160" rx="2.5" style="--d:.8s"/><rect x="92" y="55" width="5" height="110" rx="2.5" style="--d:.15s"/><rect x="108" y="35" width="5" height="150" rx="2.5" style="--d:.65s"/><rect x="124" y="65" width="5" height="90" rx="2.5" style="--d:.35s"/><rect x="140" y="45" width="5" height="130" rx="2.5" style="--d:.9s"/><rect x="156" y="75" width="5" height="70" rx="2.5" style="--d:.45s"/></svg><div class="ico"><svg viewBox="0 0 24 24"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg></div><b>Music · King J</b><small>Beats &amp; releases</small><span class="arrow">→</span></a>
+    <a class="tile" href="trading.html" data-r data-tilt style="--d:.07s"><svg class="art a-line" viewBox="0 0 200 250" preserveAspectRatio="none"><path d="M0 170 L20 160 L35 175 L55 140 L70 150 L90 110 L105 125 L125 90 L140 100 L160 60 L175 75 L200 40" stroke="#34d399" stroke-opacity=".5" fill="none" stroke-width="2"/></svg><div class="ico"><svg viewBox="0 0 24 24"><path d="M4 18l5-6 4 3 7-9"/><path d="M15 6h5v5"/></svg></div><b>Trading</b><span class="lock">🔒 Private · passcode</span><span class="arrow">→</span></a>
+    <a class="tile" href="https://www.etsy.com/shop/ImpressivelyDigital" target="_blank" rel="noopener" data-r data-tilt style="--d:.14s"><div class="art a-glow" style="--ac:rgba(255,138,76,.22);--ay:40%"></div><div class="ico"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg></div><b>The Shop</b><small>Print-on-demand gifts</small><span class="arrow">→</span></a>
+    <a class="tile" href="visuals.html" data-r data-tilt style="--d:.21s"><div class="art a-glow" style="--ac:rgba(255,255,255,.12);--ax:40%"></div><div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="14" rx="3"/><circle cx="12" cy="13" r="4"/><path d="M8 6l1.5-2h5L16 6"/></svg></div><b>Visuals</b><small>Photo &amp; video</small><span class="arrow">→</span></a>
+  </div>
+</div></section>
 
-    <section class="section" id="current">
-      <div class="wrap">
-        <div class="project-panel reveal">
-          <div class="project-copy">
-            <div class="section-kicker">03 / Current project</div>
-            <h2>Phantom<br>Grid</h2>
-            <p>Native iOS arcade game.<br>Swift + SpriteKit<br>15 levels · Live on App Store</p>
-            <div class="meta-row" aria-label="Project details"><span>Swift</span><span>SpriteKit</span><span>iOS</span><span>Live</span></div>
-            <div class="project-actions">
-              <a class="btn btn-solid" href="game.html">Explore the build <span aria-hidden="true">→</span></a>
-              <a class="btn" href="https://apps.apple.com/app/the-phantom-grid/id6785081612" target="_blank" rel="noopener">App Store <span aria-hidden="true">→</span></a>
-            </div>
-          </div>
-          <div class="project-visual"><img src="og-phantom-grid.png" alt="The Phantom Grid iOS game artwork"></div>
-        </div>
-      </div>
-    </section>
+<section><div class="wrap">
+  <div class="num" data-in>04<b class="caps">Featured work</b></div>
+  <h2 data-in><span class="mask"><span>Selected projects</span></span></h2>
+  <div class="feat" id="feat">
+    <a class="card fcard" href="https://thecandle.io" target="_blank" rel="noopener" data-r><div class="shot candle-shot"><div class="phone" id="cphone"><div class="t">THE CANDLE · LESSON 2</div><div class="h">The breakout happened. Do you enter?</div><div class="bars" id="cbars"><i style="height:30%;background:#6b8f5e"></i><i style="height:45%;background:#a35a4f"></i><i style="height:38%;background:#6b8f5e"></i><i style="height:60%;background:#6b8f5e"></i><i style="height:52%;background:#a35a4f"></i><i style="height:80%;background:#6b8f5e"></i><i style="height:96%;background:#6b8f5e"></i></div></div></div>
+      <div class="bd"><h3>The Candle</h3><p>A beginner futures-trading school: a membership site with a free trial, and a new lesson every day on YouTube, TikTok, Instagram and Facebook.</p><div class="meta"><div class="chips"><span class="chip">Education</span><span class="chip">Stripe</span><span class="chip">Video pipeline</span></div><span class="live" style="margin:0">Live</span></div></div></a>
+    <a class="card fcard" href="hq.html" data-r style="--d:.12s"><div class="shot hq-shot" aria-hidden="true"><div class="hqm" id="hqimg"><div class="hqd"><i style="--c:#f7c35f"></i><i style="--c:#ff8a4c"></i><i style="--c:#4fa3ff"></i><i style="--c:#5eead4"></i><i style="--c:#c4b5fd"></i></div><div class="hqg"><div class="hqc w2"><u style="width:34%"></u><s style="--w:82%"></s><s style="--w:64%;--d:.5s"></s><s style="--w:73%;--d:1s"></s></div><div class="hqc"><u style="width:48%"></u><svg viewBox="0 0 120 44" preserveAspectRatio="none"><path d="M0 36 20 32 38 34 58 24 76 26 96 14 120 8"/></svg></div><div class="hqc"><u style="width:40%"></u><svg viewBox="0 0 120 44" preserveAspectRatio="none"><path d="M0 30 18 34 36 22 54 26 74 16 92 20 120 6"/></svg></div><div class="hqc w2"><u style="width:28%"></u><p><b style="--d:0s"></b><b style="--d:.7s"></b><b style="--d:1.4s"></b></p></div></div></div></div>
+      <div class="bd"><h3>Business HQ</h3><p>My own command center. One screen runs four businesses — auto-posting, lead generation, a shop, job search — with alerts that catch problems before they cost anything.</p><div class="meta"><div class="chips"><span class="chip">Cloudflare</span><span class="chip">Automation</span><span class="chip">AI</span></div><span class="gold caps" style="font-size:11px;white-space:nowrap">About it →</span></div></div></a>
+  </div>
+</div></section>
 
-    <section class="section" id="contact">
-      <div class="wrap"><div class="contact-strip reveal">
-        <div class="contact-title">Let's Connect</div>
-        <a class="contact-link" href="https://www.linkedin.com/in/jaamihasan" target="_blank" rel="noopener"><strong>in</strong> LinkedIn</a>
-        <a class="contact-link" href="mailto:jaamihasan89@gmail.com"><strong>✉</strong> Email</a>
-        <a class="contact-link" href="career.html"><strong>↗</strong> Resume</a>
-      </div></div>
-    </section>
-  </main>
+<section id="current"><div class="wrap">
+  <div class="num" data-in>05<b class="caps">Now</b></div>
+  <h2 data-in><span class="mask"><span>What I'm working on</span></span></h2>
+  <div class="now">
+    <div class="card nw" data-r><div class="d"><span class="pulse"></span>Today · 6 PM</div><b>Daily lesson</b><span>The Candle, on four platforms</span></div>
+    <div class="card nw" data-r style="--d:.08s"><div class="d">This week</div><b>This portfolio</b><span>The site you're scrolling</span></div>
+    <div class="card nw" data-r style="--d:.16s"><div class="d">November</div><b>Christmas collection</b><span>Hoodies and name ornaments</span></div>
+    <div class="card nw" data-r style="--d:.24s"><div class="d">Coming soon</div><b>New beats</b><span>King J catalog</span></div>
+  </div>
+</div></section>
 
-  <footer class="foot"><div class="wrap foot-inner"><span>Jaami Hasan</span><span>© 2026 · <a class="foot-hq" href="https://hq.jaamihasan.com" rel="nofollow noopener" title="Business HQ (private)">HQ</a></span></div></footer>
-  <script src="assets/js/site.js"></script>
+<div class="contact" id="contact"><div class="wrap">
+  <div><div class="num" data-in>06</div><div class="sig" data-in>Let's build something.</div><p class="lead" style="margin-top:14px" data-r>Have a problem worth solving? I turn real-world mess into systems that run themselves.</p></div>
+  <div class="clinks"><a href="https://www.linkedin.com/in/jaamihasan" target="_blank" rel="noopener" data-r>LinkedIn <span>↗</span></a><a href="mailto:jaamihasan89@gmail.com" data-r style="--d:.08s">Email <span>↗</span></a><a href="career.html" data-r style="--d:.16s">Resume <span>↗</span></a></div>
+</div></div>
+<footer><div class="wrap"><div class="brand">JAAMI HASAN</div><div class="fl"><a href="about.html">About</a><a href="career.html">Resume</a><a href="https://www.linkedin.com/in/jaamihasan" target="_blank" rel="noopener">LinkedIn</a><a href="mailto:jaamihasan89@gmail.com">Email</a></div><div>© 2026 · <a href="https://hq.jaamihasan.com" rel="nofollow noopener" title="Business HQ (private)">HQ</a></div></div></footer>
+
+<script src="assets/js/home.js?v=20261103"></script>
 </body>
 </html>
