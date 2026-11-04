@@ -306,3 +306,8 @@ html:not(.js) .climb{display:none}
 @keyframes reel{to{transform:translateX(-50%)}}
 @keyframes leak{0%,55%{transform:translateX(-100%)}85%,100%{transform:translateX(100%)}}
 @media(max-width:700px){.film{top:20px;height:70px}}
+.tile .cer-mark{width:190px;height:53px;margin:-26px 0 0 -95px;top:38%;opacity:.62}.tile:hover .cer-mark{opacity:.95}
+.cer-star{transform-box:fill-box;transform-origin:center;animation:cerspin 24s linear infinite}
+@keyframes cerspin{to{transform:rotate(360deg)}}
+@media(max-width:700px){.tile .cer-mark{width:132px;height:37px;margin:-18px 0 0 -66px;top:36%}}
+@media(prefers-reduced-motion:reduce){.cer-star{animation:none}}
