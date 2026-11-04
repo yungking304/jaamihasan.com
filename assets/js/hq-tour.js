@@ -28,7 +28,7 @@ const X={
  plat:{k:'Social',t:'Platform card',p:['One platform at a glance: its audience, how many videos went out, and when the next one goes.']},
  etsy:{k:'Home',t:'Etsy',p:['My print-on-demand shop, ImpressivelyDigital. This card shows views, listings, ads and the next sale.','Click the card again to open the app.']},
  cerulane:{k:'Home',t:'Cerulane',p:['My website business for local companies. HQ finds businesses that need a better site and prepares the outreach.','Click the card again to open the app.']},
- lab:{k:'Home',t:'Lab',p:['A place to test trading ideas with pretend money, so an idea has to prove itself before it\'s taken seriously.','Click the card again to open the app.']},
+ lab:{k:'Home',t:'Crypto Lab',p:['A place to test trading ideas with pretend money, so an idea has to prove itself before it\'s taken seriously.','Click the card again to open the app.']},
  spend:{k:'Home',t:'Spend',p:['What the whole operation costs to run each month against a budget, like AI captions and shop fees. Amounts are hidden in this demo.']},
  systems:{k:'Home',t:'Systems',p:['HQ watches itself. If a computer goes quiet or a platform stops posting, my phone gets an alert.'],l:['Posting health is checked every 10 minutes','Problems show here before they cost anything']},
  studio:{k:'App',t:'Studio',p:['My content factory. It makes a daily lesson video for The Candle, writes the captions and schedules it on four platforms.'],l:['Videos are rendered on the Mac mini','Captions are written by AI','It warns me before the video queue runs low']},
@@ -51,9 +51,9 @@ const X={
  kApproved:{k:'Cerulane',t:'Approved',p:['Packets I\'ve read and said yes to.']},
  kReplies:{k:'Cerulane',t:'Replies',p:['Businesses that answered. This is the number that matters.']},
  packets:{k:'Cerulane',t:'Approval queue',p:['I read each one and approve or skip it. Try it: press Approve on a row. The businesses here are made up.']},
- labapp:{k:'App',t:'Lab',p:['A testing ground for trading ideas. Each idea trades with pretend money side by side, so results are compared fairly.'],l:['Practice money only in this view','New ideas arrive as plain-English cards','Nothing runs until I approve it']},
- arms:{k:'Lab',t:'Ideas being tested',p:['Each line is one idea trading on its own pretend account. Buy-and-hold sits alongside as the one to beat.']},
- idea:{k:'Lab',t:'Idea cards',p:['The system suggests something new in plain English and waits for a yes or no from me. Try pressing Approve.']},
+ labapp:{k:'App',t:'Crypto Lab',p:['A testing ground for trading ideas. Each idea trades with pretend money side by side, so results are compared fairly.'],l:['Practice money only in this view','New ideas arrive as plain-English cards','Nothing runs until I approve it']},
+ arms:{k:'Crypto Lab',t:'Ideas being tested',p:['Each line is one idea trading on its own pretend account. Buy-and-hold sits alongside as the one to beat.']},
+ idea:{k:'Crypto Lab',t:'Idea cards',p:['The system suggests something new in plain English and waits for a yes or no from me. Try pressing Approve.']},
 };
 
 const LESSONS=['Breakout & Retest','Futures vs Stocks','Futures vs Forex','Futures vs Options','What Moves Price','Closing A Trade','Micro vs Mini','What Are Ticks','What Is A Contract','Ticks vs Points','MES Tick Value'];
@@ -62,7 +62,7 @@ const BR={
  kingj:{youtube:['By hand','amber','800','subscribers','4 posted','Fri'],tiktok:['By hand','amber','600','followers','4 posted','Fri'],instagram:['Auto','','1,100','followers','4 posted','Fri'],facebook:['Auto','','300','followers','4 posted','Fri']}};
 const NEEDS=[['needTiktok','tiktok',"Post tonight's TikTok",'Draft is ready','Open'],['needYoutube','youtube',"Upload tonight's YouTube Short",'Video and captions are ready','Start'],['needCer','cer','10 Cerulane packets to approve','Sample barbers & salons','Review']];
 const PACKETS=[['Sample Barbershop','No booking page'],['Example Nail Studio','Site isn\'t phone friendly'],['Demo Brow Bar','Only has a social page'],['Placeholder Auto Detail','No online quotes']];
-const ARMS=[['Buy and hold','The one to beat','#9ca3af',[10,11,10,12,11,12,13,12,13]],['Fear & greed','Buys when the market panics','#c4b5fd',[10,9,10,11,13,12,14,15,14]],['Opposite the crowd','Fades crowded trades','#60a5fa',[10,10,9,9,10,11,10,12,12]]];
+const ARMS=[['Buy and hold','The one to beat','#9ca3af',[10,11,10,12,11,12,13,12,13]],['Fear & greed','Buys when the market panics','#c4b5fd',[10,9,10,11,13,12,14,15,14]],['Opposite the crowd','Fades crowded trades','#60a5fa',[10,10,9,9,10,11,10,12,12]],['Solana gem hunter','Hunts new Solana coins','#f0cf86',[10,12,9,14,11,16,13,18,15]]];
 const st={view:'home',brand:'candle',done:new Set(),day:12,packets:{},idea:false};
 
 const spark=(v,c)=>{const a=Math.max(...v),b=Math.min(...v),r=a-b||1,d=v.map((y,i)=>(i?'L':'M')+(i/(v.length-1)*300).toFixed(1)+' '+(40-(y-b)/r*34).toFixed(1)).join(' ');return `<svg class="spark" viewBox="0 0 300 46" preserveAspectRatio="none" aria-hidden="true"><path class="l" pathLength="1" d="${d}" stroke="${c}" vector-effect="non-scaling-stroke"/></svg>`};
@@ -79,7 +79,7 @@ const V={
   <section class="w s12" data-x="social"><h3 class="wh wrap"><span class="mini g-studio">${I.studio}</span>Social<span class="brands" data-x="brands"><button class="${st.brand==='candle'?'on':''}" data-brand="candle">The Candle</button><button class="${st.brand==='kingj'?'on':''}" data-brand="kingj">King J</button></span></h3><div class="plats" id="plats">${plats()}</div></section>
   <section class="w s4" data-x="etsy" data-go="etsy">${wh('etsy','g-etsy','Etsy')}<b class="big">1,000</b><span class="sub">views in 30 days</span>${spark([3,4,3,5,5,6,8,7,10],'#ff8a4c')}<div class="nums"><div><b>80</b><small>listings</small></div><div><b>15%</b><small>next sale</small></div></div></section>
   <section class="w s4" data-x="cerulane" data-go="cerulane">${wh('cerulane','g-cer','Cerulane')}<b class="big">10</b><span class="sub">outreach packets waiting</span><div class="nums"><div><b>200</b><small>new leads</small></div><div><b>5</b><small>approved</small></div><div><b>2</b><small>replies</small></div></div></section>
-  <section class="w s4" data-x="lab" data-go="lab">${wh('lab','g-lab','Lab · practice money')}<b class="big">3</b><span class="sub">ideas being tested</span>${spark(ARMS[1][3],'#c4b5fd')}</section>
+  <section class="w s4" data-x="lab" data-go="lab">${wh('lab','g-lab','Crypto Lab · practice money')}<b class="big">4</b><span class="sub">ideas being tested</span>${spark(ARMS[1][3],'#c4b5fd')}</section>
   <section class="w s4" data-x="spend">${wh('money','g-money','Spend')}<div class="ring"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="26" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="7"/><circle cx="32" cy="32" r="26" fill="none" stroke="#34d399" stroke-width="7" stroke-linecap="round" stroke-dasharray="60 164"/></svg><div><b>On budget</b><br><span class="sub">Amounts hidden in this demo</span></div></div></section>
   <section class="w s8" data-x="systems">${wh('pulse','g-set','Systems')}<div class="row"><span class="dot"></span><div class="t"><b>Mac mini</b></div><small class="sub"><span id="tick">5</span> sec ago</small></div><div class="row"><span class="dot"></span><div class="t"><b>Instagram · Facebook</b></div><small class="sub">posting</small></div><div class="row"><span class="dot amber"></span><div class="t"><b>YouTube · TikTok</b></div><small class="sub">by hand for now</small></div></section>
  </div>`,
@@ -93,12 +93,12 @@ const V={
   <section class="w s5" data-x="pipeline"><h3 class="wh">How a product gets made</h3><div class="steps"><span>Idea</span><span>Design</span><span>Mockup</span><span>Listing</span><span>Ads</span></div>${spark([3,4,3,5,5,6,8,7,10],'#ff8a4c')}</section></div>`,
  cerulane:()=>head('cerulane','g-cer','Cerulane','Lead finder ran 2 h ago · sample data','lead')+`<div class="kpis">${kpi('kLeads','New leads','200','local businesses')}${kpi('kPackets','Packets','10','waiting on me')}${kpi('kApproved','Approved',5+Object.values(st.packets).filter(v=>v==='ok').length,'ready to go')}${kpi('kReplies','Replies','2','the one that counts')}</div>
   <section class="w" data-x="packets"><h3 class="wh">Approval queue</h3>${PACKETS.map(([n,w],i)=>{const v=st.packets[i];return `<div class="row"><span class="av g-cer">${I.cerulane}</span><div class="t"><b>${n}</b><small>${w}</small></div>${v?`<span class="tag ${v==='ok'?'g':'n'}">${v==='ok'?'Approved':'Skipped'}</span>`:`<button class="btn soft" data-pk="${i}:no">Skip</button><button class="btn" data-pk="${i}:ok">Approve</button>`}</div>`}).join('')}</section>`,
- lab:()=>head('lab','g-lab','Lab','Practice money · sample results','labapp')+`<div class="grid">${ARMS.map(([t,s,c,v])=>`<section class="w s4" data-x="arms"><b style="font-size:15px">${t}</b><br><span class="sub">${s}</span>${spark(v,c)}</section>`).join('')}
+ lab:()=>head('lab','g-lab','Crypto Lab','Practice money · sample results','labapp')+`<div class="grid">${ARMS.map(([t,s,c,v])=>`<section class="w s6" data-x="arms"><b style="font-size:15px">${t}</b><br><span class="sub">${s}</span>${spark(v,c)}</section>`).join('')}
   <section class="w s12" data-x="idea"><h3 class="wh">New idea card</h3><div class="row"><span class="av g-lab">${I.lab}</span><div class="t"><b>Try buying only after a big drop</b><small>Sample idea, explained in plain English</small></div>${st.idea?'<span class="tag g">Approved · testing</span>':'<button class="btn" data-idea="1">Approve</button>'}</div></section></div>`,
 };
 const GLOW={home:'rgba(245,181,68,.1)',studio:'rgba(247,195,95,.12)',etsy:'rgba(255,138,76,.12)',cerulane:'rgba(79,163,255,.12)',lab:'rgba(196,181,253,.12)'};
 const FIRST={home:'intro',studio:'studio',etsy:'shop',cerulane:'lead',lab:'labapp'};
-const DOCK=[['home','Home','g-home'],['studio','Studio','g-studio'],['etsy','Etsy','g-etsy'],['cerulane','Cerulane','g-cer'],['lab','Lab','g-lab']];
+const DOCK=[['home','Home','g-home'],['studio','Studio','g-studio'],['etsy','Etsy','g-etsy'],['cerulane','Cerulane','g-cer'],['lab','Crypto Lab','g-lab']];
 
 function dock(){$('dock').innerHTML='<span class="logo">HQ</span>'+DOCK.map(([k,l,g])=>`<button class="ic ${g}${k===st.view?' on':''}" data-go="${k}" aria-label="${l}"${k===st.view?' aria-current="page"':''}>${I[k]}${k==='home'&&left()?`<span class="badge">${left()}</span>`:''}</button>`).join('')}
 function render(anim){dock();const v=$('view');v.innerHTML=V[st.view]();if(anim){v.style.animation='none';v.offsetWidth;v.style.animation=''}
@@ -127,4 +127,6 @@ document.addEventListener('click',e=>{
 });
 document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches('[data-x]')){e.preventDefault();e.target.click()}if(e.key==='Escape')$('ex').classList.remove('open')});
 let sec=5;setInterval(()=>{const t=$('tick');sec=sec>=58?1:sec+1;if(t)t.textContent=sec},1000);
-render();explain('intro',null,false);
+const start=location.hash.slice(1);
+if(V[start])st.view=start;
+render();explain(FIRST[st.view],null,false);
