@@ -252,3 +252,28 @@ html:not(.js) .climb{display:none}
  .feat,.contact .wrap{grid-template-columns:minmax(0,1fr)}.fcard .shot{height:250px}.phone{height:230px;width:130px}.fcard .meta{flex-wrap:wrap}
  .contact .sig{white-space:normal}.contact{margin-top:76px}footer .wrap{flex-direction:column;gap:16px}
 }
+
+/* tile art: game runner, Candle flame, Cerulane silhouette */
+.runway{position:absolute;left:0;right:0;top:66px;height:26px;border-bottom:2px solid rgba(45,212,191,.55);container-type:inline-size;pointer-events:none}
+.runway svg{position:absolute;left:0;bottom:0;width:24px;height:24px;shape-rendering:crispEdges;overflow:visible}
+.pg-run{animation:run 7s linear infinite;filter:drop-shadow(0 0 5px #2dd4bf)}
+.pg-enemy{animation:run 7s linear -6.35s infinite;filter:drop-shadow(0 0 4px #7c3aed)}
+.pg-run .b{fill:#ccfbf1}.pg-run .l1,.pg-run .l2{fill:#2dd4bf}.pg-run .eye{fill:#0a0f1e}
+.pg-enemy .b{fill:#7c3aed}.pg-enemy .l1,.pg-enemy .l2{fill:#5b21b6}.pg-enemy .eye{fill:#fde68a}
+.runway .l1{animation:stride .28s steps(1) infinite}.runway .l2{animation:stride .28s steps(1) -.14s infinite}
+.coin{position:absolute;bottom:8px;width:6px;height:6px;background:#fcd34d;box-shadow:0 0 6px #fcd34d;animation:var(--k) 7s linear infinite}
+@keyframes run{from{transform:translateX(-60px)}to{transform:translateX(calc(100cqw + 60px))}}
+@keyframes stride{0%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes coin1{0%,35%{opacity:1}36%,95%{opacity:0}100%{opacity:1}}
+@keyframes coin2{0%,53%{opacity:1}54%,95%{opacity:0}100%{opacity:1}}
+@keyframes coin3{0%,70%{opacity:1}71%,95%{opacity:0}100%{opacity:1}}
+.tile .mark{position:absolute;left:50%;top:36%;width:96px;height:96px;margin:-48px 0 0 -48px;transition:transform .5s var(--ease)}
+.tile:hover .mark{transform:translateY(-4px) scale(1.04)}
+.candle-mark{overflow:visible;filter:drop-shadow(0 0 14px rgba(233,162,59,.3))}
+.candle-mark .fl,.candle-mark .fl2{transform-box:fill-box;transform-origin:50% 100%}
+.candle-mark .fl{animation:flame 2.3s ease-in-out infinite}.candle-mark .fl2{animation:flame 1.5s ease-in-out -.6s infinite}
+@keyframes flame{0%,100%{transform:scale(1,1) skewX(0)}20%{transform:scale(.94,1.1) skewX(-3deg)}45%{transform:scale(1.04,.94) skewX(3deg)}70%{transform:scale(.97,1.07) skewX(-1.5deg)}}
+.cer-mark{opacity:.5;transition:opacity .4s,transform .5s var(--ease)}.tile:hover .cer-mark{opacity:.85}
+.tile b i{display:block;font-style:normal;text-transform:none;letter-spacing:.05em;font-size:13px;margin-top:4px;color:var(--gold2);font-weight:400}
+@media(max-width:700px){.runway{top:44px}.tile .mark{width:68px;height:68px;margin:-34px 0 0 -34px;top:34%}.tile b i{font-size:11px;letter-spacing:.02em}}
+@media(prefers-reduced-motion:reduce){.runway svg,.runway .l1,.runway .l2,.coin,.candle-mark .fl,.candle-mark .fl2{animation:none}.pg-run{left:24px}.pg-enemy{display:none}}
