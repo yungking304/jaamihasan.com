@@ -23,9 +23,9 @@ It's also a deliberate engineering exercise: a multi-page, Apple-style site with
 
 | Project | Stack | Status |
 |---|---|---|
-| **The Phantom Grid** — native iOS arcade game | Swift, SpriteKit | [Live on the App Store](https://apps.apple.com/app/the-phantom-grid/id6785081612) |
-| **Business HQ** — one dashboard running four businesses (lead gen, auto-posting, shop, crypto paper-trading) | Cloudflare Workers, D1, Gmail API, AI-assisted review | Private · [demo](https://jaamihasan.com/hq-tour.html) |
-| **The Candle** — beginner futures-trading school | Cloudflare Workers + D1, Stripe, Resend, video pipeline | [thecandle.io](https://thecandle.io) |
+| **The Phantom Grid** — native iOS arcade game | Swift, SpriteKit | [Live on the App Store](https://apps.apple.com/app/the-phantom-grid/id6785081612) · [web port source](https://github.com/yungking304/phantom-grid-web) |
+| **Business HQ** — one dashboard running four businesses (lead gen, auto-posting, shop, crypto paper-trading) | Cloudflare Workers, D1, Gmail API, AI-assisted review | [demo](https://jaamihasan.com/hq-tour.html) · [architecture](https://github.com/yungking304/business-hq-showcase) |
+| **The Candle** — beginner futures-trading school | Cloudflare Workers + D1, Stripe, Resend, video pipeline | [thecandle.io](https://thecandle.io) · [how it's built](https://github.com/yungking304/the-candle-showcase) |
 | **Cerulane** — websites for local businesses, with an automated prospecting engine | Cloudflare, PayPal Invoicing | [cerulane.com](https://cerulane.com) |
 
 ## Design & engineering choices
